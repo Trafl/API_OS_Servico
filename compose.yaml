@@ -3,8 +3,8 @@ services:
     image: 'mysql:latest'
     environment:
       - 'MYSQL_DATABASE=ordermServicos'
-      - 'MYSQL_PASSWORD=admin'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=admin'
+      - 'MYSQL_PASSWORD=root'
+      - 'MYSQL_ROOT_PASSWORD=root'
+      - 'MYSQL_USER=root'
     ports:
       - '3306'

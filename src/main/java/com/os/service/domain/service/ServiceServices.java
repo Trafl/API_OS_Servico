@@ -1,17 +1,19 @@
 package com.os.service.domain.service;
 
-import com.os.service.domain.model.Services;
+import com.os.service.domain.model.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 public interface ServiceServices {
 
-    public List<Services> getAllServices();
+    public Page<Service> getAllServices(Pageable pageable);
 
-    public Services getServiceById(Long id);
+    public Service getServiceById(Long id);
 
-    public Services addService(Services services);
+    public Service addService(Service service);
 
-    public Services updateService(Long id ,Services services);
+    public Service updateService(Long id , Service service);
 
     public void deleteServiceById(Long id);
 }
