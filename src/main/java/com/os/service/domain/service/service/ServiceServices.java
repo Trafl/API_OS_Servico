@@ -1,10 +1,9 @@
-package com.os.service.domain.service;
+package com.os.service.domain.service.service;
 
-import com.os.service.domain.model.Service;
+import com.os.service.domain.model.service.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 public interface ServiceServices {
 
     public Page<Service> getAllServices(Pageable pageable);

@@ -1,12 +1,9 @@
-package com.os.service.domain.service;
+package com.os.service.domain.service.groupservice;
 
-import com.os.service.domain.model.GroupServices;
-import com.os.service.domain.model.Service;
+import com.os.service.domain.model.group_service.GroupServices;
+import com.os.service.domain.model.service.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-
-import java.util.List;
 
 public interface GroupSServices {
 

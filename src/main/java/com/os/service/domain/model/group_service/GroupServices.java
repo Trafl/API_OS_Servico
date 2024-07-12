@@ -1,5 +1,6 @@
-package com.os.service.domain.model;
+package com.os.service.domain.model.group_service;
 
+import com.os.service.domain.model.service.Service;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

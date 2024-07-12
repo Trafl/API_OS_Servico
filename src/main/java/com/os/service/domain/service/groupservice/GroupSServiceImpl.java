@@ -1,12 +1,10 @@
-package com.os.service.domain.service.impl;
+package com.os.service.domain.service.groupservice;
 
 import com.os.service.domain.exception.GroupServiceNotFoundException;
-import com.os.service.domain.exception.ServiceNotFoundException;
-import com.os.service.domain.model.GroupServices;
-import com.os.service.domain.model.Service;
+import com.os.service.domain.model.group_service.GroupServices;
+import com.os.service.domain.model.service.Service;
 import com.os.service.domain.repository.GroupServicesRepository;
-import com.os.service.domain.service.GroupSServices;
-import com.os.service.domain.service.ServiceServices;
+import com.os.service.domain.service.service.ServiceServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
@@ -37,14 +34,14 @@ public class GroupSServiceImpl implements GroupSServices {
     }
 
     @Override
-    public GroupServices getGroupById(Long id) {
-        log.info("[{}] - [GroupSServiceImpl] Executing getGroupById with id: {} ", timestamp, id);
+    public GroupServices getGroupById(Long groupId) {
+        log.info("[{}] - [GroupSServiceImpl] Executing getGroupById with id: {} ", timestamp, groupId);
 
-        var savedGroup = repository.findById(id).orElseThrow(() -> new GroupServiceNotFoundException(
-                String.format("Group with Id: %d not found in database.", id)
+        var savedGroup = repository.findById(groupId).orElseThrow(() -> new GroupServiceNotFoundException(
+                String.format("Group with Id: %d not found in database.", groupId)
         ));
 
-        log.info("[{}] - [GroupSServiceImpl] group found successful. id: {} ", timestamp, id);
+        log.info("[{}] - [GroupSServiceImpl] group found successful. id: {} ", timestamp, groupId);
         return savedGroup;
     }
 
@@ -59,10 +56,10 @@ public class GroupSServiceImpl implements GroupSServices {
 
     @Override
     @Transactional
-    public GroupServices addServiceToGroup(Long id, Service service) {
-        log.info("[{}] - [GroupSServiceImpl] Executing addServiceToGroup. Group id: {}  service: {} ", timestamp,id, service);
+    public GroupServices addServiceToGroup(Long groupId, Service service) {
+        log.info("[{}] - [GroupSServiceImpl] Executing addServiceToGroup. Group id: {}  service: {} ", timestamp,groupId, service);
 
-        var savedGroup = getGroupById(id);
+        var savedGroup = getGroupById(groupId);
 
         var savedService = serviceS.addService(service);
 
@@ -90,14 +87,14 @@ public class GroupSServiceImpl implements GroupSServices {
     }
 
     @Override
-    public void disabledGroupById(Long id) {
+    public void disabledGroupById(Long groupId) {
         //atento ao null ID
         //descobrir a exception do repository quando o Id n existe no banco
-        log.info("[{}] - [GroupSServiceImpl] Executing deleteGroupById group id: {}", timestamp, id);
-        getGroupById(id);
-        repository.softDelete(id);
+        log.info("[{}] - [GroupSServiceImpl] Executing deleteGroupById group id: {}", timestamp, groupId);
+        getGroupById(groupId);
+        repository.softDelete(groupId);
 
-        log.info("[{}] - [GroupSServiceImpl] group disabled successful. id: {} ", timestamp, id);
+        log.info("[{}] - [GroupSServiceImpl] group disabled successful. id: {} ", timestamp, groupId);
 
     }
 }

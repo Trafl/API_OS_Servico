@@ -1,16 +1,12 @@
 package com.os.service.api.services.mapper;
 
-import com.os.service.api.groupServices.DTO.GroupAllDTOOutput;
 import com.os.service.api.services.DTO.ServiceDTOInput;
 import com.os.service.api.services.DTO.ServiceDTOOutput;
-import com.os.service.domain.model.GroupServices;
-import com.os.service.domain.model.Service;
+import com.os.service.domain.model.service.Service;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor

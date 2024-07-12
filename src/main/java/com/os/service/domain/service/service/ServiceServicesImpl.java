@@ -1,16 +1,14 @@
-package com.os.service.domain.service.impl;
+package com.os.service.domain.service.service;
 
 import com.os.service.domain.exception.ServiceNotFoundException;
-import com.os.service.domain.model.Service;
+import com.os.service.domain.model.service.Service;
 import com.os.service.domain.repository.ServicesRepository;
-import com.os.service.domain.service.ServiceServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor

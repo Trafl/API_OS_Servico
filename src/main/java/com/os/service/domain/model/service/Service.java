@@ -1,4 +1,4 @@
-package com.os.service.domain.model;
+package com.os.service.domain.model.service;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

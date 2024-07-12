@@ -4,19 +4,11 @@ import com.os.service.api.groupServices.DTO.GroupAllDTOOutput;
 import com.os.service.api.groupServices.DTO.GroupDTOInput;
 import com.os.service.api.groupServices.DTO.GroupDTONameOutput;
 import com.os.service.api.groupServices.DTO.GroupOneDTOOutput;
-import com.os.service.api.services.DTO.ServiceDTOOutput;
-import com.os.service.api.services.mapper.ServiceMapper;
-import com.os.service.domain.model.GroupServices;
-import com.os.service.domain.model.Service;
+import com.os.service.domain.model.group_service.GroupServices;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
