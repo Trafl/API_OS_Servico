@@ -1,9 +1,9 @@
 package com.os.service.api.groupServices.mapper;
 
-import com.os.service.api.groupServices.DTO.GroupAllDTOOutput;
-import com.os.service.api.groupServices.DTO.GroupDTOInput;
-import com.os.service.api.groupServices.DTO.GroupDTONameOutput;
-import com.os.service.api.groupServices.DTO.GroupOneDTOOutput;
+import com.os.service.api.groupServices.DTO.output.GroupAllDTOOutput;
+import com.os.service.api.groupServices.DTO.input.GroupDTOInput;
+import com.os.service.api.groupServices.DTO.output.GroupDTONameOutput;
+import com.os.service.api.groupServices.DTO.output.GroupOneDTOOutput;
 import com.os.service.domain.model.group_service.GroupServices;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

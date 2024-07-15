@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
 
 @Getter
 @Setter
@@ -15,11 +16,16 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class WorkData {
 
-    private Long technicianId;
-
-    private String technicianName;
-
     private LocalTime start;
 
     private LocalTime end;
+
+    public void startOrder(){
+        this.start = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+    }
+
+    public void finishOrder(){
+        this.end = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+    }
+
 }

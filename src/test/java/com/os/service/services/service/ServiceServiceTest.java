@@ -4,7 +4,7 @@ import com.os.service.domain.exception.ServiceNotFoundException;
 import com.os.service.domain.model.service.Service;
 import com.os.service.domain.repository.ServicesRepository;
 import org.junit.jupiter.api.*;
-import com.os.service.domain.service.service.ServiceServicesImpl;
+import com.os.service.domain.services.service.ServiceServicesImpl;
 
 import java.util.Optional;
 

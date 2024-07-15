@@ -1,4 +1,4 @@
-package com.os.service.domain.service.service;
+package com.os.service.domain.services.service;
 
 import com.os.service.domain.exception.ServiceNotFoundException;
 import com.os.service.domain.model.service.Service;

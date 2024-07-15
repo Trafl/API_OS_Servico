@@ -1,4 +1,4 @@
-package com.os.service.domain.service.groupservice;
+package com.os.service.domain.services.groupservice;
 
 import com.os.service.domain.model.group_service.GroupServices;
 import com.os.service.domain.model.service.Service;

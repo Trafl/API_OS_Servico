@@ -1,10 +1,13 @@
-package com.os.service.domain.service.order;
+package com.os.service.domain.services.order;
 
+import com.os.service.domain.exception.OrderFinishedOrCanceledException;
 import com.os.service.domain.exception.OrderNotFoundException;
 import com.os.service.domain.model.order.Order;
-import com.os.service.domain.model.order.ServiceInOrder;
+import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
 import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.repository.OrderRepository;
+import com.os.service.domain.services.service.ServiceServices;
+import com.os.service.domain.services.serviceInOrder.ServiceInOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -18,7 +21,11 @@ import java.time.LocalDateTime;
 @Log4j2
 public class OrderServiceImpl implements OrderService {
 
+    private final ServiceServices serviceServices;
+
     private final OrderRepository orderRepository;
+
+    private final ServiceInOrderService serviceInOrderService;
     private  String timestamp = LocalDateTime.now().toString();
 
     @Override
@@ -32,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("[{}] - [OrderServiceImpl] Executing getOneOrderById with id: {} ", timestamp, orderId);
         var savedOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(
-                        String.format("Group with Id: %d not found in database.")));
+                        String.format("Group with Id: %d not found in database.", orderId)));
 
         log.info("[{}] - [OrderServiceImpl] order found successful. id: {} ", timestamp, orderId);
         return savedOrder;
@@ -48,8 +55,39 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order addServiceToOrder(ServiceInOrder serviceInOrder) {
-        return null;
+    public Order addServiceToOrder(Long orderId, ServiceInOrder serviceInOrder){
+        log.info("[{}] - [OrderServiceImpl] Executing addServiceToOrder Id Order: {}, ServiceInOrder: {} ", timestamp, orderId, serviceInOrder);
+
+        var order  = getOneOrderById(orderId);
+
+        if(order.getStatus().equals(WorkStatus.FINALIZADO) || order.getStatus().equals(WorkStatus.CANCELADO )){
+            throw new OrderFinishedOrCanceledException(
+                    String.format("Order with Id: %d is completed or canceled", orderId));
+        }
+
+        serviceInOrder.setOrder(order);
+
+        log.info("[{}] - [OrderServiceImpl] Linked Order to ServiceInOrder", timestamp);
+
+
+        var service = serviceServices.getServiceById(serviceInOrder.getId());
+
+        serviceInOrder.setService(service);
+
+        log.info("[{}] - [OrderServiceImpl] Linked Service to ServiceInOrder", timestamp);
+
+
+        var savedServiceInOrder =  serviceInOrderService.saveServiceInOrder(serviceInOrder);
+
+        order.getServicesInOrder().add(savedServiceInOrder);
+
+        log.info("[{}] - [OrderServiceImpl] Add ServiceInOrder Id: {},  after save, in Order with Id: {} ", timestamp,savedServiceInOrder.getId(), orderId);
+
+        var orderWithService = orderRepository.save(order);
+
+        log.info("[{}] - [OrderServiceImpl] ServiceInOrder with Id: {} add with successful to Order with Id: {} ", timestamp,savedServiceInOrder.getId(), orderWithService.getId());
+
+        return orderWithService;
     }
 
     @Override
@@ -98,6 +136,6 @@ public class OrderServiceImpl implements OrderService {
         log.info("[{}] - [OrderServiceImpl] Executing deleteOrderById group id: {}", timestamp, orderId);
         getOneOrderById(orderId);
         orderRepository.deleteById(orderId);
-        log.info("[{}] - [OrderServiceImpl] order delete successful. id: {} ", timestamp, orderId);
+        log.info("[{}] - [OrderServiceImpl] order delete successful. id: {}", timestamp, orderId);
     }
 }

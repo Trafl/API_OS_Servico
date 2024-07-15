@@ -1,6 +1,8 @@
 package com.os.service.api.exceptionhandler;
 
 import com.os.service.domain.exception.GroupServiceNotFoundException;
+import com.os.service.domain.exception.OrderFinishedOrCanceledException;
+import com.os.service.domain.exception.OrderNotFoundException;
 import com.os.service.domain.exception.ServiceNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.*;
@@ -79,17 +81,29 @@ import java.util.Map;
 
     }
 
-//        @ExceptionHandler(BusinessException.class)
-//        ProblemDetail handlerBusinessException(BusinessException e) {
-//            ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
-//
-//            problem.setTitle("Violation of business rules.");
-//            problem.setProperty("timestamp", Instant.now());
-//
-//            log.error("[{}] - [GlobalExeption] - BusinessException: {}", timestamp, e.getMessage());
-//            return problem;
-//
-//        }
+    @ExceptionHandler(OrderNotFoundException.class)
+    ProblemDetail handlerOrderNotFoundException(OrderNotFoundException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+
+        problem.setTitle("Unregistered order");
+        problem.setProperty("timestamp", Instant.now());
+
+        log.error("[{}] - [GlobalExeption] - OrderNotFoundException: {}", timestamp, e.getMessage());
+        return problem;
+
+    }
+
+    @ExceptionHandler(OrderFinishedOrCanceledException.class)
+    ProblemDetail handlerOrderFinishedOrCanceledException(OrderFinishedOrCanceledException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        problem.setTitle("Violation of business rules.");
+        problem.setProperty("timestamp", Instant.now());
+
+        log.error("[{}] - [GlobalExeption] - OrderFinishedOrCanceledException: {}", timestamp, e.getMessage());
+        return problem;
+
+    }
 
 //        @ExceptionHandler(InformationInUseException.class)
 //        ProblemDetail handlerInformationInUseException(InformationInUseException e) {

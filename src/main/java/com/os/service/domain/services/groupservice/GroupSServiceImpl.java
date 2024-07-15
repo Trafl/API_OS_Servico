@@ -1,10 +1,10 @@
-package com.os.service.domain.service.groupservice;
+package com.os.service.domain.services.groupservice;
 
 import com.os.service.domain.exception.GroupServiceNotFoundException;
 import com.os.service.domain.model.group_service.GroupServices;
 import com.os.service.domain.model.service.Service;
 import com.os.service.domain.repository.GroupServicesRepository;
-import com.os.service.domain.service.service.ServiceServices;
+import com.os.service.domain.services.service.ServiceServices;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

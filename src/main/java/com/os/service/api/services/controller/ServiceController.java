@@ -3,7 +3,7 @@ package com.os.service.api.services.controller;
 import com.os.service.api.services.DTO.ServiceDTOInput;
 import com.os.service.api.services.DTO.ServiceDTOOutput;
 import com.os.service.api.services.mapper.ServiceMapper;
-import com.os.service.domain.service.service.ServiceServices;
+import com.os.service.domain.services.service.ServiceServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

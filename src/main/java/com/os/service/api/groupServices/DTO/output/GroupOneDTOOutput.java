@@ -1,4 +1,4 @@
-package com.os.service.api.groupServices.DTO;
+package com.os.service.api.groupServices.DTO.output;
 
 import com.os.service.api.services.DTO.ServiceDTOOutput;
 import lombok.Getter;

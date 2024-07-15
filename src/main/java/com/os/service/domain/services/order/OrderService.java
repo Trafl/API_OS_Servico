@@ -1,12 +1,9 @@
-package com.os.service.domain.service.order;
+package com.os.service.domain.services.order;
 
 import com.os.service.domain.model.order.Order;
-import com.os.service.domain.model.order.ServiceInOrder;
-import com.os.service.domain.repository.OrderRepository;
-import lombok.RequiredArgsConstructor;
+import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 
 public interface OrderService {
@@ -17,7 +14,7 @@ public interface OrderService {
 
     Order addOrder(Order order);
 
-    Order addServiceToOrder(ServiceInOrder serviceInOrder);
+    Order addServiceToOrder(Long orderId, ServiceInOrder serviceInOrder);
 
     void starOrder(Long orderId);
 

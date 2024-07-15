@@ -1,14 +1,14 @@
 package com.os.service.api.groupServices.controller;
 
-import com.os.service.api.groupServices.DTO.GroupAllDTOOutput;
-import com.os.service.api.groupServices.DTO.GroupDTOInput;
-import com.os.service.api.groupServices.DTO.GroupDTONameOutput;
-import com.os.service.api.groupServices.DTO.GroupOneDTOOutput;
+import com.os.service.api.groupServices.DTO.output.GroupAllDTOOutput;
+import com.os.service.api.groupServices.DTO.input.GroupDTOInput;
+import com.os.service.api.groupServices.DTO.output.GroupDTONameOutput;
+import com.os.service.api.groupServices.DTO.output.GroupOneDTOOutput;
 import com.os.service.api.groupServices.mapper.GroupMapper;
 import com.os.service.api.services.DTO.ServiceDTOInput;
 import com.os.service.api.services.mapper.ServiceMapper;
 import com.os.service.domain.model.group_service.GroupServices;
-import com.os.service.domain.service.groupservice.GroupSServices;
+import com.os.service.domain.services.groupservice.GroupSServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
