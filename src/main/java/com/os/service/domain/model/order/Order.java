@@ -23,6 +23,9 @@ public class Order {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    private WorkStatus status = WorkStatus.ABERTO;
+
+    @Enumerated(EnumType.STRING)
     private WorkType type;
 
     private LocalDateTime scheduledDate;
@@ -33,10 +36,7 @@ public class Order {
 
     private String escopoDosServicos;
 
-    @Enumerated(EnumType.STRING)
-    private WorkStatus status = WorkStatus.ABERTO;
 
-    //private Andress
 
     //--------------------------------------------------------------------
 

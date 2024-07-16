@@ -2,6 +2,8 @@ package com.os.service.api.serviceInOrder.DTO.input;
 
 import com.os.service.domain.model.order.Verification;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,12 +14,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ServiceInOrderDTOInput {
 
+    @Valid
     private ServiceToServiceInOrderDTOInput service;
 
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private Verification verificationBefore;
 
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private Verification verificationAfter;
 
 }

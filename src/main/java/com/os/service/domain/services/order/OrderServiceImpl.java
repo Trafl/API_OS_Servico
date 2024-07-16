@@ -3,11 +3,13 @@ package com.os.service.domain.services.order;
 import com.os.service.domain.exception.OrderFinishedOrCanceledException;
 import com.os.service.domain.exception.OrderNotFoundException;
 import com.os.service.domain.model.order.Order;
+import com.os.service.domain.model.order.WorkData;
 import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
 import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.repository.OrderRepository;
 import com.os.service.domain.services.service.ServiceServices;
 import com.os.service.domain.services.serviceInOrder.ServiceInOrderService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -70,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("[{}] - [OrderServiceImpl] Linked Order to ServiceInOrder", timestamp);
 
 
-        var service = serviceServices.getServiceById(serviceInOrder.getId());
+        var service = serviceServices.getServiceById(serviceInOrder.getService().getId());
 
         serviceInOrder.setService(service);
 
@@ -91,17 +93,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void starOrder(Long orderId) {
         log.info("[{}] - [OrderServiceImpl] Executing starOrder with Id Order:{} ", timestamp, orderId);
         var orderInDb = getOneOrderById(orderId);
 
         if(orderInDb.getStatus().equals(WorkStatus.ABERTO)){
+            orderInDb.setWorkData(new WorkData());
             orderInDb.starOrder();
             log.info("[{}] - [OrderServiceImpl] Id Order:{} Started ", timestamp, orderId);
         }
     }
 
     @Override
+    @Transactional
     public void closeOrder(Long orderId) {
         log.info("[{}] - [OrderServiceImpl] Executing closeOrder with Id Order:{} ", timestamp, orderId);
         var orderInDb = getOneOrderById(orderId);
@@ -113,6 +118,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void cancelOrder(Long orderId) {
         log.info("[{}] - [OrderServiceImpl] Executing cancelOrder with Id Order:{} ", timestamp, orderId);
         var orderInDb = getOneOrderById(orderId);

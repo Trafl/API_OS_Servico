@@ -4,6 +4,7 @@ package com.os.service.api.order.controller;
 import com.os.service.api.order.DTO.input.OrderDTOInput;
 import com.os.service.api.order.DTO.output.OrderAllDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
+import com.os.service.api.order.DTO.output.OrderOnePdfDTOOutput;
 import com.os.service.api.order.mapper.OrderMapper;
 
 import com.os.service.api.serviceInOrder.DTO.input.ServiceInOrderDTOInput;
@@ -93,6 +94,8 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dtOutput);
     }
 
+    // Cria metodo para usar a AWS
+
     @PutMapping("/{orderId}/iniciar")
     public void startOrder(@PathVariable Long orderId, HttpServletRequest request){
         orderService.starOrder(orderId);
@@ -107,4 +110,15 @@ public class OrderController {
     public void cancelOrder(@PathVariable Long orderId, HttpServletRequest request){
         orderService.cancelOrder(orderId);
     }
+
+    @GetMapping("/{orderId}/pdf")
+    public ResponseEntity<OrderOnePdfDTOOutput> getOneOrderForPDF(@PathVariable Long orderId, HttpServletRequest request){
+
+        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/{}/pdf'", timestamp,orderId, request.getRemoteAddr());
+        var savedOrder = orderService.getOneOrderById(orderId);
+        var orderDTO = mapper.toDTOPdf(savedOrder);
+
+        return ResponseEntity.ok(orderDTO);
+    }
+
 }
