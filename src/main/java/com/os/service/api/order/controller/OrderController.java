@@ -1,6 +1,9 @@
 package com.os.service.api.order.controller;
 
 
+import com.os.service.api.order.DTO.generatorstatus.GeneratorStatusDTO;
+import com.os.service.api.order.DTO.generatortest.GeneratorTestDTO;
+import com.os.service.api.order.DTO.input.GeneralObservationsDTOInput;
 import com.os.service.api.order.DTO.input.OrderDTOInput;
 import com.os.service.api.order.DTO.output.OrderAllDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
@@ -81,9 +84,35 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderDto);
     }
 
-    @PostMapping("/{orderId}")
+    // Cria metodo para usar a AWS
+
+    @PutMapping("/{orderId}/iniciar")
+    public ResponseEntity<Void> startOrder(@PathVariable Long orderId, HttpServletRequest request){
+        log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/iniciar'", timestamp, request.getRemoteAddr(), orderId);
+        orderService.starOrder(orderId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{orderId}/finalizar")
+    public ResponseEntity<Void> finishOrder(@PathVariable Long orderId, @RequestBody GeneralObservationsDTOInput dtoInput, HttpServletRequest request){
+        log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/finalizar'", timestamp, request.getRemoteAddr(), orderId);
+        orderService.closeOrder(orderId, dtoInput.getGeneralObservations());
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{orderId}/cancelar")
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long orderId, HttpServletRequest request){
+        log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/cancelar'", timestamp, request.getRemoteAddr(), orderId);
+        orderService.cancelOrder(orderId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{orderId}/servico")
     public ResponseEntity<OrderOneDTOOutput> addServiceToOrder(@PathVariable Long orderId,
-                                        @Valid @RequestBody ServiceInOrderDTOInput dtoInput, HttpServletRequest request){
+                                                               @Valid @RequestBody ServiceInOrderDTOInput dtoInput, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}'", timestamp, request.getRemoteAddr(), orderId);
         var serviceModel = serviceInOrderMapper.toModel(dtoInput);
 
@@ -94,21 +123,28 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dtOutput);
     }
 
-    // Cria metodo para usar a AWS
+    @PostMapping("/{orderId}/gerador_teste")
+    public ResponseEntity<Void> addGeneratorTestToOrder(@PathVariable Long orderId, @RequestBody GeneratorTestDTO dtoInput, HttpServletRequest request){
 
-    @PutMapping("/{orderId}/iniciar")
-    public void startOrder(@PathVariable Long orderId, HttpServletRequest request){
-        orderService.starOrder(orderId);
+        log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/gerador_teste'", timestamp, request.getRemoteAddr(), orderId);
+
+        var generatorTest = mapper.toTesteModel(dtoInput);
+
+        orderService.addGeneratorTestToOrder(orderId, generatorTest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{orderId}/finalizar")
-    public void finishOrder(@PathVariable Long orderId, HttpServletRequest request){
-        orderService.closeOrder(orderId);
-    }
+    @PostMapping("/{orderId}/gerador_status")
+    public ResponseEntity<Void> addGeneratorStatusToOrder(@PathVariable Long orderId, @RequestBody GeneratorStatusDTO dtoInput, HttpServletRequest request){
 
-    @PutMapping("/{orderId}/cancelar")
-    public void cancelOrder(@PathVariable Long orderId, HttpServletRequest request){
-        orderService.cancelOrder(orderId);
+        log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/gerador_status'", timestamp, request.getRemoteAddr(), orderId);
+
+        var generatorStatus = mapper.toStatusModel(dtoInput);
+
+        orderService.addGeneratorStatusToOrder(orderId, generatorStatus);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{orderId}/pdf")

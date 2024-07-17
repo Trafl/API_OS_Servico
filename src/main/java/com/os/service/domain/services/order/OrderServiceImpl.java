@@ -2,8 +2,11 @@ package com.os.service.domain.services.order;
 
 import com.os.service.domain.exception.OrderFinishedOrCanceledException;
 import com.os.service.domain.exception.OrderNotFoundException;
+import com.os.service.domain.exception.OrderWrongStatusException;
 import com.os.service.domain.model.order.Order;
 import com.os.service.domain.model.order.WorkData;
+import com.os.service.domain.model.order.generatorstatus.GeneratorStatus;
+import com.os.service.domain.model.order.generatortest.GeneratorTest;
 import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
 import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.repository.OrderRepository;
@@ -102,18 +105,29 @@ public class OrderServiceImpl implements OrderService {
             orderInDb.setWorkData(new WorkData());
             orderInDb.starOrder();
             log.info("[{}] - [OrderServiceImpl] Id Order:{} Started ", timestamp, orderId);
-        }
+        }else{
+        throw new OrderWrongStatusException(
+                String.format("Order Id: %d is completed or in progress", orderId));
+    }
     }
 
     @Override
     @Transactional
-    public void closeOrder(Long orderId) {
+    public void closeOrder(Long orderId, String generalObservations) {
         log.info("[{}] - [OrderServiceImpl] Executing closeOrder with Id Order:{} ", timestamp, orderId);
         var orderInDb = getOneOrderById(orderId);
 
+        if(generalObservations == null){
+            generalObservations = "";
+        }
+
         if(orderInDb.getStatus().equals(WorkStatus.ANDAMENTO)){
+            orderInDb.setGeneralObservations(generalObservations);
             orderInDb.closeOrder();
             log.info("[{}] - [OrderServiceImpl] Id Order:{} Closed ", timestamp, orderId);
+        }else{
+            throw new OrderWrongStatusException(
+                    String.format("Order: Id %d not start", orderId));
         }
     }
 
@@ -124,9 +138,39 @@ public class OrderServiceImpl implements OrderService {
         var orderInDb = getOneOrderById(orderId);
 
         if(orderInDb.getStatus().equals(WorkStatus.ABERTO)||orderInDb.getStatus().equals(WorkStatus.ANDAMENTO)){
-            orderInDb.closeOrder();
+            orderInDb.cancelOrder();
             log.info("[{}] - [OrderServiceImpl] Id Order:{} Canceled ", timestamp, orderId);
+        }else{
+            throw new OrderWrongStatusException(
+                    String.format("Order Id: %d is finalized, cannot cancel", orderId));
         }
+    }
+
+    @Override
+    @Transactional
+    public void addGeneratorTestToOrder(Long orderId, GeneratorTest generatorTest){
+        log.info("[{}] - [OrderServiceImpl] Executing addGeneratorTestToOrder with Id:{} ", timestamp, orderId);
+        var orderInDb = getOneOrderById(orderId);
+        orderInDb.setGeneratorTest(generatorTest);
+        log.info("[{}] - [OrderServiceImpl] Add GeneratorTest To Order with Id:{} ", timestamp, orderId);
+    }
+
+    @Override
+    @Transactional
+    public void addGeneratorStatusToOrder(Long orderId, GeneratorStatus generatorStatus ){
+        log.info("[{}] - [OrderServiceImpl] Executing addGeneratorStatus with Id:{} ", timestamp, orderId);
+        var orderInDb = getOneOrderById(orderId);
+        orderInDb.setGeneratorStatus(generatorStatus);
+        log.info("[{}] - [OrderServiceImpl] Add GeneratorStatus To Order with Id:{} ", timestamp, orderId);
+    }
+
+    @Override
+    @Transactional
+    public void addGeneralObservationsToOrder(Long orderId, String generalObservations ){
+        log.info("[{}] - [OrderServiceImpl] Executing addGeneralObservations with Id:{} ", timestamp, orderId);
+        var orderInDb = getOneOrderById(orderId);
+        orderInDb.setGeneralObservations(generalObservations);
+        log.info("[{}] - [OrderServiceImpl] Add GeneralObservations to Order with Id:{} ", timestamp, orderId);
     }
 
     @Override

@@ -28,4 +28,13 @@ public class WorkData {
         this.end = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
     }
 
+    public void cancelOrder(){
+        if(start != null){
+            this.end = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+        }else{
+            this.start = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+            this.end = LocalTime.now(ZoneId.of("America/Sao_Paulo"));
+        }
+
+    }
 }

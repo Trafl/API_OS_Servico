@@ -1,9 +1,6 @@
 package com.os.service.api.exceptionhandler;
 
-import com.os.service.domain.exception.GroupServiceNotFoundException;
-import com.os.service.domain.exception.OrderFinishedOrCanceledException;
-import com.os.service.domain.exception.OrderNotFoundException;
-import com.os.service.domain.exception.ServiceNotFoundException;
+import com.os.service.domain.exception.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.*;
 import org.springframework.validation.FieldError;
@@ -104,6 +101,19 @@ import java.util.Map;
         return problem;
 
     }
+
+    @ExceptionHandler(OrderWrongStatusException.class)
+    ProblemDetail handlerOrderWrongStatusException(OrderWrongStatusException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        problem.setTitle("Violation of business rules.");
+        problem.setProperty("timestamp", Instant.now());
+
+        log.error("[{}] - [GlobalExeption] - OrderWrongStatusException: {}", timestamp, e.getMessage());
+        return problem;
+
+    }
+
 
 //        @ExceptionHandler(InformationInUseException.class)
 //        ProblemDetail handlerInformationInUseException(InformationInUseException e) {

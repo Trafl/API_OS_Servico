@@ -49,11 +49,11 @@ public class ServiceInOrderServiceImpl implements ServiceInOrderService {
 
     @Override
     public ServiceInOrder saveServiceInOrder(ServiceInOrder serviceInOrder) {
-        log.info("[{}] - [ServiceInOrderServiceImpl] Executing addServiceToOrder with body: {} ", timestamp, serviceInOrder);
+        log.info("[{}] - [ServiceInOrderServiceImpl] Executing addServiceToOrder with body: {}", timestamp, serviceInOrder);
 
         var savedServiceInOrder = serviceInOrderRepository.save(serviceInOrder);
 
-        log.info("[{}] - [ServiceInOrderServiceImpl] serviceInOrder add successful. id: {} {} ", timestamp, savedServiceInOrder.getId());
+        log.info("[{}] - [ServiceInOrderServiceImpl] serviceInOrder add successful. id: {}", timestamp, savedServiceInOrder.getId());
         return savedServiceInOrder;
     }
 

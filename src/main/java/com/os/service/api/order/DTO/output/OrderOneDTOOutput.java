@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,6 +34,6 @@ public class OrderOneDTOOutput {
 
     private String escopoDosServicos;
 
-    private List<ServiceInOrderDTOOutput> servicesInOrder;
+    private Set<ServiceInOrderDTOOutput> servicesInOrder;
 
 }

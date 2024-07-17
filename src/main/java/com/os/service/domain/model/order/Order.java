@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -36,13 +37,11 @@ public class Order {
 
     private String escopoDosServicos;
 
-
-
     //--------------------------------------------------------------------
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ServiceInOrder> servicesInOrder;
-    //Mudar de List para Set
+    private Set<ServiceInOrder> servicesInOrder;
+
     @Embedded
     private WorkData workData;
 
@@ -65,6 +64,7 @@ public class Order {
     }
 
     public void cancelOrder() {
+        this.workData.cancelOrder();
         this.status = WorkStatus.CANCELADO;
     }
 
