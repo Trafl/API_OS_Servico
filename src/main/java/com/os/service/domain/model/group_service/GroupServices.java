@@ -24,7 +24,7 @@ public class GroupServices {
 
     private String name;
 
-    @ElementCollection
+    @OneToMany(mappedBy = "group_services", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Service> services = new ArrayList<>();
 
     private boolean deleted = false;

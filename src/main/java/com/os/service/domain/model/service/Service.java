@@ -1,5 +1,6 @@
 package com.os.service.domain.model.service;
 
+import com.os.service.domain.model.group_service.GroupServices;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,9 @@ public class Service {
 
     private String description;
 
-    private Long group_id;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private GroupServices group_services;
 
     public Service(String name,String description ){
         this.name =name;

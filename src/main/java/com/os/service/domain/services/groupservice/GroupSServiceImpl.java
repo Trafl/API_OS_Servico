@@ -63,7 +63,7 @@ public class GroupSServiceImpl implements GroupSServices {
 
         var savedService = serviceS.addService(service);
 
-        savedService.setGroup_id(savedGroup.getId());
+        savedService.setGroup_services(savedGroup);
         savedGroup.getServices().add(savedService);
 
         serviceS.addService(service);

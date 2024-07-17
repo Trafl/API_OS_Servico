@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -32,7 +33,7 @@ public class OrderOnePdfDTOOutput {
 
     private String escopoDosServicos;
 
-    private Set<ServiceInOrderDTOOutput> servicesInOrder;
+    private List<ServiceInOrderDTOOutput> servicesInOrder;
 
     private WorkDataDTOOutput workData;
 

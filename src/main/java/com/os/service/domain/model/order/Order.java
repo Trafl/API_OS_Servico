@@ -40,7 +40,7 @@ public class Order {
     //--------------------------------------------------------------------
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ServiceInOrder> servicesInOrder;
+    private List<ServiceInOrder> servicesInOrder;
 
     @Embedded
     private WorkData workData;

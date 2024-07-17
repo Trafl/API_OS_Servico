@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ServiceInOrderDTOOutput {
 
+    private Long id;
+
     private ServiceToServiceInOrderDTOOutput service;
 
     @Enumerated(EnumType.STRING)

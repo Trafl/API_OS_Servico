@@ -1,5 +1,8 @@
 package com.os.service.api.services.DTO;
 
+import com.os.service.api.groupServices.DTO.output.GroupAllDTOOutput;
+import com.os.service.api.groupServices.DTO.output.GroupNameDTOOutput;
+import com.os.service.domain.model.group_service.GroupServices;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,5 +18,5 @@ public class ServiceDTOOutput{
 
     private String description;
 
-    private Long group_id;
+    private GroupNameDTOOutput groupServices;
 }
