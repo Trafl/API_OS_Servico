@@ -1,7 +1,9 @@
 package com.os.service.api.order.DTO.input;
 
+import com.os.service.api.order.DTO.endereco.EnderecoDTO;
 import com.os.service.domain.model.order.WorkType;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -27,6 +29,9 @@ public class OrderDTOInput {
 
     @NotNull
     private Long technician_id;
+
+    @Valid
+    private EnderecoDTO endereco;
 
     @NotBlank
     private String escopoDosServicos;

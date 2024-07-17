@@ -1,5 +1,6 @@
 package com.os.service.api.order.DTO.output;
 
+import com.os.service.api.order.DTO.endereco.EnderecoDTO;
 import com.os.service.api.serviceInOrder.DTO.output.ServiceInOrderDTOOutput;
 import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.model.order.WorkType;
@@ -30,6 +31,8 @@ public class OrderOneDTOOutput {
     private Long client_id;
 
     private Long technician_id;
+
+    private EnderecoDTO endereco;
 
     private String escopoDosServicos;
 

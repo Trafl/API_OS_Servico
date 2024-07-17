@@ -37,6 +37,9 @@ public class Order {
 
     private String escopoDosServicos;
 
+    @Embedded
+    private Endereco endereco;
+
     //--------------------------------------------------------------------
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
