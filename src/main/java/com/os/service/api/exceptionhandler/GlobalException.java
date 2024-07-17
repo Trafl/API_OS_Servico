@@ -78,6 +78,19 @@ import java.util.Map;
 
     }
 
+    @ExceptionHandler(ServiceInOrderNotFoundException.class)
+    ProblemDetail handlerServiceInOrderNotFoundException(ServiceInOrderNotFoundException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+
+        problem.setTitle("Unregistered service");
+        problem.setProperty("timestamp", Instant.now());
+
+        log.error("[{}] - [GlobalExeption] - ServiceInOrderNotFoundException: {}", timestamp, e.getMessage());
+        return problem;
+
+    }
+
+
     @ExceptionHandler(OrderNotFoundException.class)
     ProblemDetail handlerOrderNotFoundException(OrderNotFoundException e) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
@@ -110,6 +123,17 @@ import java.util.Map;
         problem.setProperty("timestamp", Instant.now());
 
         log.error("[{}] - [GlobalExeption] - OrderWrongStatusException: {}", timestamp, e.getMessage());
+        return problem;
+
+    }
+    @ExceptionHandler(ErrorUploadPhotoForS3Exception.class)
+    ProblemDetail handlerErrorUploadPhotoForS3Exception(ErrorUploadPhotoForS3Exception e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+
+        problem.setTitle("Error serializing or saving photo.");
+        problem.setProperty("timestamp", Instant.now());
+
+        log.error("[{}] - [GlobalExeption] - ErrorUploadPhotoForS3Exception: {}", timestamp, e.getMessage());
         return problem;
 
     }
