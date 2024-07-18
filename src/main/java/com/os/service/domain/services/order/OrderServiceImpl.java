@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("[{}] - [OrderServiceImpl] Executing getOneOrderById with id: {} ", timestamp, orderId);
         var savedOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(
-                        String.format("Group with Id: %d not found in database.", orderId)));
+                        String.format("Order with Id: %d not found in database.", orderId)));
 
         log.info("[{}] - [OrderServiceImpl] order found successful. id: {} ", timestamp, orderId);
         return savedOrder;

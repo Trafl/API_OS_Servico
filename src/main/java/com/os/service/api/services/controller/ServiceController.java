@@ -32,7 +32,6 @@ public class ServiceController {
 
     final private PagedResourcesAssembler<ServiceDTOOutput> pagedResourcesAssembler;
 
-    //Talvez n use o getAllServices()
     @GetMapping
     public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getAllServices(@PageableDefault Pageable pageable, HttpServletRequest request){
 
@@ -59,8 +58,6 @@ public class ServiceController {
         return ResponseEntity.ok(Dto);
     }
 
-    //atualizar serviçp
-
     @PutMapping("/{serviceId}")
     public ResponseEntity<ServiceDTOOutput> updateOneServiceById(@PathVariable Long serviceId,
                                                                  @RequestBody @Valid ServiceDTOInput newService, HttpServletRequest request){
@@ -75,7 +72,6 @@ public class ServiceController {
 
         return ResponseEntity.ok(Dto);
     }
-
 
     @DeleteMapping("/{serviceId}")
     public ResponseEntity<Void> deleteServiceById(@PathVariable Long serviceId, HttpServletRequest request){
