@@ -2,6 +2,7 @@ package com.os.service.domain.services.aws;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.os.service.domain.exception.ErrorUploadPhotoForS3Exception;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,11 @@ public class AwsServiceImpl implements AwsService {
 
             fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-            s3.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(), null));
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(file.getSize());
+            metadata.setContentType(file.getContentType());
+
+            s3.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(), metadata));
 
             log.info("[{}] - [AwsServiceImpl] photo name: {}, add successful to S3",timestamp,fileName);
         }catch (IOException e){
