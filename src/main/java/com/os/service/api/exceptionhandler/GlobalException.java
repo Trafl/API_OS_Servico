@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Log4j2
 @RestControllerAdvice
- class GlobalExeption extends ResponseEntityExceptionHandler {
+ class GlobalException extends ResponseEntityExceptionHandler {
 
     private String timestamp = LocalDateTime.now().toString();
 

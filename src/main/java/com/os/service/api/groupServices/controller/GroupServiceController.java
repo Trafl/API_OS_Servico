@@ -4,6 +4,7 @@ import com.os.service.api.groupServices.DTO.output.GroupAllDTOOutput;
 import com.os.service.api.groupServices.DTO.input.GroupDTOInput;
 import com.os.service.api.groupServices.DTO.output.GroupDTONameOutput;
 import com.os.service.api.groupServices.DTO.output.GroupOneDTOOutput;
+import com.os.service.api.groupServices.controller.openapi.GroupServiceControllerDocumentation;
 import com.os.service.api.groupServices.mapper.GroupMapper;
 import com.os.service.api.services.DTO.ServiceDTOInput;
 import com.os.service.api.services.mapper.ServiceMapper;
@@ -29,7 +30,7 @@ import java.time.LocalDateTime;
 @RequestMapping("api/grupos_servicos")
 @RequiredArgsConstructor
 @Log4j2
-public class GroupServiceController {
+public class GroupServiceController implements GroupServiceControllerDocumentation {
 
     final private GroupSServices services;
 
@@ -68,7 +69,7 @@ public class GroupServiceController {
     }
 
     @PostMapping()
-    public ResponseEntity<GroupOneDTOOutput> addGroupById(@Valid @RequestBody GroupDTOInput dtoInput, HttpServletRequest request){
+    public ResponseEntity<GroupOneDTOOutput> addGroup(@Valid @RequestBody GroupDTOInput dtoInput, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: POST, EndPoint: 'api/grupos_servicos/'", timestamp, request.getRemoteAddr());
 

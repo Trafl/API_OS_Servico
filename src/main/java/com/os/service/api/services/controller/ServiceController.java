@@ -2,6 +2,7 @@ package com.os.service.api.services.controller;
 
 import com.os.service.api.services.DTO.ServiceDTOInput;
 import com.os.service.api.services.DTO.ServiceDTOOutput;
+import com.os.service.api.services.controller.openapi.ServiceControllerDocumentation;
 import com.os.service.api.services.mapper.ServiceMapper;
 import com.os.service.domain.services.service.ServiceServices;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/servicos")
 @RequiredArgsConstructor
-public class ServiceController {
+public class ServiceController implements ServiceControllerDocumentation {
 
     private final ServiceServices service;
 

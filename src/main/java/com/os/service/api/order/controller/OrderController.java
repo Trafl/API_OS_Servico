@@ -10,6 +10,7 @@ import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOnePdfDTOOutput;
 import com.os.service.api.order.mapper.OrderMapper;
 
+import com.os.service.api.order.controller.openapi.OrderControllerDocumentation;
 import com.os.service.api.serviceInOrder.DTO.input.ServiceInOrderDTOInput;
 import com.os.service.api.serviceInOrder.mapper.ServiceInOrderMapper;
 import com.os.service.domain.model.order.Order;
@@ -35,7 +36,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/ordem")
-public class OrderController {
+public class OrderController implements OrderControllerDocumentation {
 
     private final OrderService orderService;
 

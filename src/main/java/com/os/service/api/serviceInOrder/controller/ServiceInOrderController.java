@@ -1,5 +1,6 @@
 package com.os.service.api.serviceInOrder.controller;
 
+import com.os.service.api.serviceInOrder.controller.openapi.ServiceInOrderControllerDocumentation;
 import com.os.service.domain.services.aws.AwsServiceImpl;
 import com.os.service.domain.services.serviceInOrder.ServiceInOrderService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Log4j2
 @RequestMapping("/api/servico_ordem")
 @RequiredArgsConstructor
-public class ServiceInOrderController {
+public class ServiceInOrderController implements ServiceInOrderControllerDocumentation {
 
     private final ServiceInOrderService orderService;
 
