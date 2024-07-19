@@ -1,10 +1,15 @@
 services:
   mysql:
     image: 'mysql:latest'
-    environment:
-      - 'MYSQL_DATABASE=energ_orders'
-      - 'MYSQL_PASSWORD=admin'
-      - 'MYSQL_ROOT_PASSWORD=verysecret'
-      - 'MYSQL_USER=admin'
+    env_file:
+      - docker.env
     ports:
       - '3306'
+  energ_os:
+    image: pivoluz/api_relatorio_os
+    env_file:
+      - docker.env
+    depends_on:
+      - mysql
+    ports:
+      - '8080'
