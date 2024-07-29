@@ -4,8 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-desenvolvimento.env
-docker.env
+.env
 
 ### IntelliJ IDEA ###
 .idea

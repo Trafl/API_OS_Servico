@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ServiceController implements ServiceControllerDocumentation {
     final private PagedResourcesAssembler<ServiceDTOOutput> pagedResourcesAssembler;
 
     @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getAllServices(@PageableDefault Pageable pageable, HttpServletRequest request){
+    public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getAllServices(@PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
 
         log.info("[{}] - [ServiceController] IP: {}, Request: GET, EndPoint: '/api/servicos'", timestamp, request.getRemoteAddr());
 
@@ -44,7 +45,13 @@ public class ServiceController implements ServiceControllerDocumentation {
 
         PagedModel<EntityModel<ServiceDTOOutput>> pageDto = pagedResourcesAssembler.toModel(listDto);
 
-        return ResponseEntity.ok(pageDto);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("x-total-count", Long.toString(pageOfService.getTotalElements()));
+        headers.add("x-total-pages", Integer.toString(pageOfService.getTotalPages()));
+        headers.add("x-page-number", Integer.toString(pageOfService.getNumber()));
+        headers.add("x-page-size", Integer.toString(pageOfService.getSize()));
+
+        return ResponseEntity.ok().headers(headers).body(pageDto);
     }
 
     @GetMapping("/{serviceId}")

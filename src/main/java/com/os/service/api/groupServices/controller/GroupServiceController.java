@@ -20,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     private String timestamp = LocalDateTime.now().toString();
 
     @GetMapping
-    public ResponseEntity<PagedModel<EntityModel<GroupAllDTOOutput>>> getAllGroups(@PageableDefault  Pageable pageable, HttpServletRequest request){
+    public ResponseEntity<PagedModel<EntityModel<GroupAllDTOOutput>>> getAllGroups(@PageableDefault(size = 5)  Pageable pageable, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: GET, EndPoint: 'api/grupos_servicos'", timestamp, request.getRemoteAddr());
 
@@ -53,7 +54,13 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
 
         PagedModel<EntityModel<GroupAllDTOOutput>> paged = pagedResourcesAssembler.toModel(pageDto);
 
-        return ResponseEntity.ok(paged);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("x-total-count", Long.toString(pageDto.getTotalElements()));
+        headers.add("x-total-pages", Integer.toString(pageDto.getTotalPages()));
+        headers.add("x-page-number", Integer.toString(pageDto.getNumber()));
+        headers.add("x-page-size", Integer.toString(pageDto.getSize()));
+
+        return ResponseEntity.ok().headers(headers).body(paged);
     }
 
     @GetMapping("/{groupId}")

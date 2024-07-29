@@ -2,14 +2,14 @@ services:
   mysql:
     image: 'mysql:latest'
     env_file:
-      - docker.env
+      - .env
     ports:
-      - '3306'
+      - '3306:3306'
   energ_os:
     image: pivoluz/api_relatorio_os
     env_file:
-      - docker.env
+      - .env
     depends_on:
       - mysql
     ports:
-      - '8080'
+      - '8080:8080'
