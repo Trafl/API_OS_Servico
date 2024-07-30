@@ -26,13 +26,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Tag(name = "Ordens de Serviço", description = "Controlador da classe Order")
 public interface OrderControllerDocumentation {
@@ -48,6 +52,12 @@ public interface OrderControllerDocumentation {
                             content = @Content(schema = @Schema(ref = "ProblemDetail"))),
             })
     public ResponseEntity<OrderOneDTOOutput> getOneOrder(Long orderId, HttpServletRequest request);
+
+    @Operation(summary = "Pega uma ordem entre as datas informadas",
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+            })
+    public ResponseEntity<PagedModel<EntityModel<OrderAllDTOOutput>>> getOrderByDate(LocalDate startDay, LocalDate endDay, Pageable pageable, HttpServletRequest request);
 
     @Operation(summary = "Adiciona ordem de serviço",
             responses = {

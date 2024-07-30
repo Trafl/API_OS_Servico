@@ -17,6 +17,8 @@ import org.modelmapper.TypeMap;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class OrderMapper {
@@ -47,5 +49,7 @@ public class OrderMapper {
         return mapper.map(generatorStatusDTO, GeneratorTest.class);
     }
 
-
+    public List<OrderAllDTOOutput> toCollectionDto(List<Order> list){
+        return list.stream().map(order -> mapper.map(order, OrderAllDTOOutput.class)).toList();
+    }
 }

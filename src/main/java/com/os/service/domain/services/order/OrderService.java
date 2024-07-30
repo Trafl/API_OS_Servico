@@ -8,12 +8,17 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 public interface OrderService {
 
     Page<Order> getAllOrders(Pageable pageable);
 
     Order getOneOrderById(Long orderId);
+
+    Page<Order> GetOrderByDate(Pageable pageable, LocalDateTime starDay, LocalDateTime endDay);
 
     Order addOrder(Order order);
 

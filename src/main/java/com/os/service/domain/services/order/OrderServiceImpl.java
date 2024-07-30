@@ -20,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,6 +49,12 @@ public class OrderServiceImpl implements OrderService {
 
         log.info("[{}] - [OrderServiceImpl] order found successful. id: {} ", timestamp, orderId);
         return savedOrder;
+    }
+
+    @Override
+    public Page<Order> GetOrderByDate( Pageable pageable, LocalDateTime starDay, LocalDateTime endDay) {
+        log.info("[{}] - [OrderServiceImpl] Executing GetOrderByDate between {} and {} ", timestamp, starDay, endDay);
+        return orderRepository.findByDate(pageable, starDay, endDay);
     }
 
     @Override

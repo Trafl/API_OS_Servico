@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 
@@ -31,7 +32,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -65,6 +69,31 @@ public class OrderController implements OrderControllerDocumentation {
         headers.add("x-total-pages", Integer.toString(pageDto.getTotalPages()));
         headers.add("x-page-number", Integer.toString(pageDto.getNumber()));
         headers.add("x-page-size", Integer.toString(pageDto.getSize()));
+
+        return ResponseEntity.ok().headers(headers).body(paged);
+    }
+
+    @GetMapping("/filtro")
+    public ResponseEntity<PagedModel<EntityModel<OrderAllDTOOutput>>> getOrderByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDay,
+                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endDay,
+                                                                  @PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
+
+        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/'", timestamp, request.getRemoteAddr());
+
+        LocalDateTime startDayWithTIme = startDay.atStartOfDay();
+        LocalDateTime endDayWithTIme = endDay.atTime(LocalTime.MAX);
+
+        var pageOrder = orderService.GetOrderByDate(pageable, startDayWithTIme, endDayWithTIme);
+
+        var PageOrderDTO = mapper.mapPageToDTO(pageOrder);
+
+        PagedModel<EntityModel<OrderAllDTOOutput>> paged = pagedResourcesAssembler.toModel(PageOrderDTO);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("x-total-count", Long.toString(PageOrderDTO.getTotalElements()));
+        headers.add("x-total-pages", Integer.toString(PageOrderDTO.getTotalPages()));
+        headers.add("x-page-number", Integer.toString(PageOrderDTO.getNumber()));
+        headers.add("x-page-size", Integer.toString(PageOrderDTO.getSize()));
 
         return ResponseEntity.ok().headers(headers).body(paged);
     }
