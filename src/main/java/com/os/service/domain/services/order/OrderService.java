@@ -20,6 +20,8 @@ public interface OrderService {
 
     Page<Order> GetOrderByDate(Pageable pageable, LocalDateTime starDay, LocalDateTime endDay);
 
+    Integer countOrderByStatus();
+
     Order addOrder(Order order);
 
     Order addServiceToOrder(Long orderId, ServiceInOrder serviceInOrder);

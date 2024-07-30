@@ -78,7 +78,7 @@ public class OrderController implements OrderControllerDocumentation {
                                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endDay,
                                                                   @PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
 
-        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/'", timestamp, request.getRemoteAddr());
+        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/filtro?startDay={}&endDay={}'", timestamp, request.getRemoteAddr(), startDay,endDay);
 
         LocalDateTime startDayWithTIme = startDay.atStartOfDay();
         LocalDateTime endDayWithTIme = endDay.atTime(LocalTime.MAX);
@@ -108,6 +108,15 @@ public class OrderController implements OrderControllerDocumentation {
         return ResponseEntity.ok(orderDTO);
     }
 
+    @GetMapping("/abertas")
+    public ResponseEntity<Integer> getOpenOrders(HttpServletRequest request){
+
+        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/abertas'", timestamp, request.getRemoteAddr());
+        var countOrders = orderService.countOrderByStatus();
+
+        return ResponseEntity.ok(countOrders);
+    }
+
     @PostMapping
     public ResponseEntity<OrderOneDTOOutput> addOrder(@RequestBody @Valid OrderDTOInput dtoInput, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem'", timestamp, request.getRemoteAddr());
@@ -120,8 +129,6 @@ public class OrderController implements OrderControllerDocumentation {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(orderDto);
     }
-
-    // Cria metodo para usar a AWS
 
     @PutMapping("/{orderId}/iniciar")
     public ResponseEntity<Void> startOrder(@PathVariable Long orderId, HttpServletRequest request){

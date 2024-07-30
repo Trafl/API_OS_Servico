@@ -58,6 +58,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Integer countOrderByStatus() {
+        return orderRepository.countByStatus(WorkStatus.ABERTO);
+    }
+
+    @Override
     public Order addOrder(Order order) {
         log.info("[{}] - [OrderServiceImpl] Executing addOrder with body: {} ", timestamp, order);
         var savedOrder = orderRepository.save(order);

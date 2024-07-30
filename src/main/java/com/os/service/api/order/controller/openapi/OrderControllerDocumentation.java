@@ -53,6 +53,12 @@ public interface OrderControllerDocumentation {
             })
     public ResponseEntity<OrderOneDTOOutput> getOneOrder(Long orderId, HttpServletRequest request);
 
+    @Operation(summary = "Conta quantas ordens em aberto tem no Db",
+            responses = {
+                    @ApiResponse(responseCode = "200")
+            })
+    public ResponseEntity<Integer> getOpenOrders(HttpServletRequest request);
+
     @Operation(summary = "Pega uma ordem entre as datas informadas",
             responses = {
                     @ApiResponse(responseCode = "200"),
