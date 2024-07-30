@@ -177,15 +177,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
-    public void addGeneralObservationsToOrder(Long orderId, String generalObservations ){
-        log.info("[{}] - [OrderServiceImpl] Executing addGeneralObservations with Id:{} ", timestamp, orderId);
-        var orderInDb = getOneOrderById(orderId);
-        orderInDb.setGeneralObservations(generalObservations);
-        log.info("[{}] - [OrderServiceImpl] Add GeneralObservations to Order with Id:{} ", timestamp, orderId);
-    }
-
-    @Override
     public Order updateOrderById(Long orderId) {
 
         // fazer com o mapper

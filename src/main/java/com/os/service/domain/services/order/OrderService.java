@@ -36,8 +36,6 @@ public interface OrderService {
 
     public void addGeneratorStatusToOrder(Long orderId, GeneratorStatus generatorStatus );
 
-    public void addGeneralObservationsToOrder(Long orderId, String generalObservations );
-
     Order updateOrderById(Long orderId);
 
     void deleteOrderById(Long orderId);

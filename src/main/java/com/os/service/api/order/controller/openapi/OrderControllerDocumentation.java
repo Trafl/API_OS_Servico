@@ -83,7 +83,7 @@ public interface OrderControllerDocumentation {
             })
     public ResponseEntity<Void> startOrder(Long orderId, HttpServletRequest request);
 
-    @Operation(summary = "Finaliza uma Ordem", description = "Finaliza uma Orderm de serviço que esta no Db, o tempo do serviço para de marcar",
+    @Operation(summary = "Finaliza uma Ordem", description = "Finaliza uma Orderm de serviço que esta no Db, o tempo do serviço para de marcar com a opção de adicionar uma observação geral ou não",
             responses = {
                     @ApiResponse(responseCode = "200"),
 
