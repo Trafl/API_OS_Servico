@@ -1,10 +1,12 @@
 services:
   mysql:
-    image: 'mysql:latest'
+    image: mysql:latest
     env_file:
       - .env
     ports:
-      - '3306:3306'
+      - '${DB_PORT}:${DB_PORT}'
+    volumes:
+      - mysql_data:/var/lib/mysql
   energ_os:
     image: pivoluz/api_relatorio_os
     env_file:
@@ -12,4 +14,12 @@ services:
     depends_on:
       - mysql
     ports:
-      - '8080:8080'
+      - '${API_OS_PORT}:${API_OS_PORT}'
+  email_os:
+    image: pivoluz/api_email_os
+    env_file:
+      - .env
+    ports:
+      - '${API_EMAIL_PORT}:${API_EMAIL_PORT}'
+volumes:
+  mysql_data:
