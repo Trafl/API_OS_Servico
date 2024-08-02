@@ -6,6 +6,7 @@ import com.os.service.api.groupServices.DTO.output.GroupDTONameOutput;
 import com.os.service.api.groupServices.DTO.output.GroupOneDTOOutput;
 import com.os.service.api.groupServices.mapper.GroupMapper;
 import com.os.service.api.services.DTO.ServiceDTOInput;
+import com.os.service.api.services.DTO.ServiceDTOOutput;
 import com.os.service.api.services.mapper.ServiceMapper;
 import com.os.service.domain.model.group_service.GroupServices;
 import com.os.service.domain.services.groupservice.GroupSServices;
@@ -24,6 +25,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +43,18 @@ public interface GroupServiceControllerDocumentation {
             })
     public ResponseEntity<PagedModel<EntityModel<GroupAllDTOOutput>>> getAllGroups(Pageable pageable, HttpServletRequest request);
 
-    @Operation(summary = "Pega um Grupo pelo Id",
+
+    @Operation(summary = "Lista os serviços de um grupo por Id",
             responses = {
                     @ApiResponse(responseCode = "200"),
 
                     @ApiResponse(responseCode = "404", description = "Grupo não foi encontrado no banco de dados",
                             content = @Content(schema = @Schema(ref = "ProblemDetail"))),
+
+                    @ApiResponse(responseCode = "400", description = "Erro nos campos digitados",
+                            content = @Content(schema = @Schema(ref = "ProblemDetail")))
             })
-    public ResponseEntity<GroupOneDTOOutput> getOneGroupById( Long groupId, HttpServletRequest request);
+    public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getServicesOfGroupById(Long groupId, Pageable pageable, HttpServletRequest request);
 
     @Operation(summary = "Adiciona um grupo", description = "Adiciona um Grupo de serviços ao bando de dados",
             responses = {

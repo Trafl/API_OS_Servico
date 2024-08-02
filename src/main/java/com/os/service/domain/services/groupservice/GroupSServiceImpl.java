@@ -46,6 +46,12 @@ public class GroupSServiceImpl implements GroupSServices {
     }
 
     @Override
+    public Page<Service> getServicesByGroupId(Pageable pageable, Long groupId) {
+        getGroupById(groupId);
+        return serviceS.getServicesByGroupId(pageable, groupId);
+    }
+
+    @Override
     public GroupServices addGroup(GroupServices group) {
         log.info("[{}] - [GroupSServiceImpl] Executing addGroup with body: {} ", timestamp, group);
         var savedGroup = repository.save(group);

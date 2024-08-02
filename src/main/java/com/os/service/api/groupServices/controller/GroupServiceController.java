@@ -7,6 +7,7 @@ import com.os.service.api.groupServices.DTO.output.GroupOneDTOOutput;
 import com.os.service.api.groupServices.controller.openapi.GroupServiceControllerDocumentation;
 import com.os.service.api.groupServices.mapper.GroupMapper;
 import com.os.service.api.services.DTO.ServiceDTOInput;
+import com.os.service.api.services.DTO.ServiceDTOOutput;
 import com.os.service.api.services.mapper.ServiceMapper;
 import com.os.service.domain.model.group_service.GroupServices;
 import com.os.service.domain.services.groupservice.GroupSServices;
@@ -41,6 +42,8 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
 
     final private ServiceMapper serviceMapper;
 
+    final private PagedResourcesAssembler<ServiceDTOOutput> servicePagedResourcesAssembler;
+
     private String timestamp = LocalDateTime.now().toString();
 
     @GetMapping
@@ -64,15 +67,23 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     }
 
     @GetMapping("/{groupId}")
-    public ResponseEntity<GroupOneDTOOutput> getOneGroupById(@PathVariable Long groupId, HttpServletRequest request){
+    public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getServicesOfGroupById(@PathVariable Long groupId, @PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: GET, EndPoint: 'api/grupos_servicos/{}'", timestamp, request.getRemoteAddr(),groupId);
 
-        var group = services.getGroupById(groupId);
+        var servicesPage = services.getServicesByGroupId(pageable, groupId);
 
-        var groupDto = mapper.getOneDto(group);
+        var servicePageDto = serviceMapper.mapPageToDTO(servicesPage);
 
-        return ResponseEntity.ok(groupDto);
+        PagedModel<EntityModel<ServiceDTOOutput>> paged = servicePagedResourcesAssembler.toModel(servicePageDto);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("x-total-count", Long.toString(servicePageDto.getTotalElements()));
+        headers.add("x-total-pages", Integer.toString(servicePageDto.getTotalPages()));
+        headers.add("x-page-number", Integer.toString(servicePageDto.getNumber()));
+        headers.add("x-page-size", Integer.toString(servicePageDto.getSize()));
+
+        return ResponseEntity.ok().headers(headers).body(paged);
     }
 
     @PostMapping()

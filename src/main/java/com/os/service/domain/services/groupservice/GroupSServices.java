@@ -11,6 +11,8 @@ public interface GroupSServices {
 
     public GroupServices getGroupById(Long id);
 
+    public Page<Service> getServicesByGroupId(Pageable pageable, Long groupId);
+
     public GroupServices addGroup(GroupServices group);
 
     public GroupServices addServiceToGroup(Long id, Service service);

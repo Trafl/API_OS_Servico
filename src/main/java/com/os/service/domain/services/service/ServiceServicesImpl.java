@@ -25,6 +25,11 @@ public class ServiceServicesImpl implements ServiceServices {
     }
 
     @Override
+    public Page<Service> getServicesByGroupId(Pageable pageable, Long groupId) {
+        return repository.findServicesByGroupId(pageable, groupId);
+    }
+
+    @Override
     public Service getServiceById(Long id) {
         log.info("[{}] - [ServiceServicesImpl] Executing getServiceById with id: {} ", timestamp, id);
         var savedService = repository.findById(id).orElseThrow(() -> new ServiceNotFoundException(

@@ -8,6 +8,8 @@ public interface ServiceServices {
 
     public Page<Service> getAllServices(Pageable pageable);
 
+    public Page<Service> getServicesByGroupId(Pageable pageable, Long groupId);
+
     public Service getServiceById(Long id);
 
     public Service addService(Service service);
