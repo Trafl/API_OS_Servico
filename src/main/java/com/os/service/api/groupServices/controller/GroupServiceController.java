@@ -1,7 +1,7 @@
 package com.os.service.api.groupServices.controller;
 
-import com.os.service.api.groupServices.DTO.output.GroupAllDTOOutput;
 import com.os.service.api.groupServices.DTO.input.GroupDTOInput;
+import com.os.service.api.groupServices.DTO.output.GroupAllDTOOutput;
 import com.os.service.api.groupServices.DTO.output.GroupDTONameOutput;
 import com.os.service.api.groupServices.DTO.output.GroupOneDTOOutput;
 import com.os.service.api.groupServices.controller.openapi.GroupServiceControllerDocumentation;
@@ -18,9 +18,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +32,7 @@ import java.time.LocalDateTime;
 @RequestMapping("api/grupos_servicos")
 @RequiredArgsConstructor
 @Log4j2
+@CrossOrigin(origins = "*", exposedHeaders = {"x-total-count", "x-total-pages", "x-page-number", "x-page-size"})
 public class GroupServiceController implements GroupServiceControllerDocumentation {
 
     final private GroupSServices services;

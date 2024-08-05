@@ -41,6 +41,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/ordem")
+@CrossOrigin(origins = "*", exposedHeaders = {"x-total-count", "x-total-pages", "x-page-number", "x-page-size"})
 public class OrderController implements OrderControllerDocumentation {
 
     private final OrderService orderService;

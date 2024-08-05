@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/servicos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", exposedHeaders = {"x-total-count", "x-total-pages", "x-page-number", "x-page-size"})
 public class ServiceController implements ServiceControllerDocumentation {
 
     private final ServiceServices service;

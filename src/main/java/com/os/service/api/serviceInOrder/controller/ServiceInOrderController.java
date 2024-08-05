@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Log4j2
 @RequestMapping("/api/servico_ordem")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", exposedHeaders = {"x-total-count", "x-total-pages", "x-page-number", "x-page-size"})
 public class ServiceInOrderController implements ServiceInOrderControllerDocumentation {
 
     private final ServiceInOrderService orderService;
