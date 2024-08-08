@@ -7,17 +7,17 @@ import org.springframework.data.domain.Pageable;
 
 public interface GroupSServices {
 
-    public Page<GroupServices> getAllGroups(Pageable pageable);
+     Page<GroupServices> getAllGroups(Pageable pageable);
 
-    public GroupServices getGroupById(Long id);
+     GroupServices getGroupById(Long id);
 
-    public Page<Service> getServicesByGroupId(Pageable pageable, Long groupId);
+     Page<Service> getServicesByGroupId(Pageable pageable, Long groupId);
 
-    public GroupServices addGroup(GroupServices group);
+     GroupServices addGroup(GroupServices group);
 
-    public GroupServices addServiceToGroup(Long id, Service service);
+     GroupServices addServiceToGroup(Long id, Service service);
 
-    public GroupServices updateGroup(Long id , GroupServices group);
+     GroupServices updateGroup(Long id , GroupServices group);
 
-    public void disabledGroupById(Long id);
+     void disabledGroupById(Long id);
 }

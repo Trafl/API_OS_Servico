@@ -1,7 +1,6 @@
 package com.os.service.api.order.DTO.generatortest;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

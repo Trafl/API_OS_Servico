@@ -5,13 +5,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ServiceInOrderService {
 
-    public ServiceInOrder getServiceById(Long id);
+     ServiceInOrder getServiceById(Long id);
 
-    public ServiceInOrder saveServiceInOrder(ServiceInOrder serviceInOrder);
+     ServiceInOrder saveServiceInOrder(ServiceInOrder serviceInOrder);
 
-    public void deleteServiceInOrderById(Long id);
+     void deleteServiceInOrderById(Long id);
 
-    public void addPhotoBefore(Long id, MultipartFile file);
+     void addPhotoBefore(Long id, MultipartFile file);
 
-    public void addPhotoAfter(Long id, MultipartFile file);
+     void addPhotoAfter(Long id, MultipartFile file);
 }

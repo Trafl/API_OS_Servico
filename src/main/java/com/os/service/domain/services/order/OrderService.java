@@ -4,12 +4,10 @@ import com.os.service.domain.model.order.Order;
 import com.os.service.domain.model.order.generatorstatus.GeneratorStatus;
 import com.os.service.domain.model.order.generatortest.GeneratorTest;
 import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
-import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 public interface OrderService {
@@ -32,9 +30,9 @@ public interface OrderService {
 
     void cancelOrder(Long orderId);
 
-    public void addGeneratorTestToOrder(Long orderId, GeneratorTest generatorTest);
+    void addGeneratorTestToOrder(Long orderId, GeneratorTest generatorTest);
 
-    public void addGeneratorStatusToOrder(Long orderId, GeneratorStatus generatorStatus );
+    void addGeneratorStatusToOrder(Long orderId, GeneratorStatus generatorStatus);
 
     Order updateOrderById(Long orderId);
 

@@ -1,7 +1,6 @@
 package com.os.service.api.serviceInOrder.DTO.input;
 
 import com.os.service.domain.model.order.Verification;
-import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

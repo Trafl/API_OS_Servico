@@ -1,7 +1,6 @@
 package com.os.service.api.order.DTO.endereco;
 
 
-import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

@@ -5,10 +5,10 @@ import com.os.service.domain.exception.OrderNotFoundException;
 import com.os.service.domain.exception.OrderWrongStatusException;
 import com.os.service.domain.model.order.Order;
 import com.os.service.domain.model.order.WorkData;
+import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.model.order.generatorstatus.GeneratorStatus;
 import com.os.service.domain.model.order.generatortest.GeneratorTest;
 import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
-import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.repository.OrderRepository;
 import com.os.service.domain.services.service.ServiceServices;
 import com.os.service.domain.services.serviceInOrder.ServiceInOrderService;
@@ -20,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

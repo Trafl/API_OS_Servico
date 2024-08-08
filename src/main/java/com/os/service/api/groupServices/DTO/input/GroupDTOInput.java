@@ -1,12 +1,9 @@
 package com.os.service.api.groupServices.DTO.input;
 
-import com.os.service.api.services.DTO.ServiceDTOOutput;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
