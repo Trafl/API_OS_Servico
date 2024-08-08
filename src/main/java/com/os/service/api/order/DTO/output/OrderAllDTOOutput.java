@@ -23,4 +23,6 @@ public class OrderAllDTOOutput {
 
     private Long technician_id;
 
+    private LocalDateTime scheduledDate;
+
 }

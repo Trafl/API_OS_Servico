@@ -21,4 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status")
     Integer countByStatus(@Param("status") WorkStatus status);
 
+    @Override
+    @Query("SELECT o FROM Order o ORDER BY o.id DESC")
+     Page<Order> findAll(Pageable pageable);
 }
