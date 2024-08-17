@@ -1,8 +1,8 @@
 package com.os.service.api.order.DTO.input;
 
 import com.os.service.api.order.DTO.endereco.EnderecoDTO;
+import com.os.service.domain.model.order.ClientType;
 import com.os.service.domain.model.order.WorkType;
-import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderDTOInput {
 
-    @Enumerated(EnumType.STRING)
     @NotNull
     private WorkType type;
 
@@ -26,6 +25,12 @@ public class OrderDTOInput {
 
     @NotNull
     private Long client_id;
+
+    @NotNull
+    private ClientType client_type;
+
+    @NotNull
+    private Long client_equipment_id;
 
     @NotNull
     private Long technician_id;

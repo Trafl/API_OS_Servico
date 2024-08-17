@@ -16,6 +16,7 @@ CREATE TABLE orders (
     numero INTEGER,
     start TIME(6),
     client_id BIGINT,
+    client_equipment_id BIGINT,
     id BIGINT NOT NULL AUTO_INCREMENT,
     scheduled_date DATETIME(6),
     technician_id BIGINT,
@@ -53,6 +54,7 @@ CREATE TABLE orders (
     rua VARCHAR(255),
     status ENUM ('ABERTO', 'ANDAMENTO', 'CANCELADO', 'FINALIZADO'),
     type ENUM ('CORRETIVA', 'PREVENTIVA'),
+    client_type ENUM ('FISICO', 'JURIDICO'),
     PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1001;
 

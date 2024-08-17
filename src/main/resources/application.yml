@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: order_service
+#  config:
+#    import: file:.env[.properties]
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${MYSQL_DATABASE}?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+
+server:
+  port: ${API_OS_PORT}
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8080/realms/Energ
+#          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+
+
+
+#jwt:
+#  auth:
+#    converter:
+#      resource-id: energ_client_app
+#      principle-attribute: preferred_username

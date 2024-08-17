@@ -1,6 +1,8 @@
 package com.os.service.api.serviceInOrder.controller;
 
+import com.os.service.api.serviceInOrder.DTO.output.ServiceInOrderDTOOutput;
 import com.os.service.api.serviceInOrder.controller.openapi.ServiceInOrderControllerDocumentation;
+import com.os.service.api.serviceInOrder.mapper.ServiceInOrderMapper;
 import com.os.service.domain.services.serviceInOrder.ServiceInOrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,21 @@ public class ServiceInOrderController implements ServiceInOrderControllerDocumen
 
     private final ServiceInOrderService orderService;
 
+    private final ServiceInOrderMapper serviceInOrderMapper;
+    
     private String timestamp = LocalDateTime.now().toString();
+
+    @GetMapping("/{serviceInOrderId}")
+    public ResponseEntity<ServiceInOrderDTOOutput> getServiceInOrderById(@PathVariable Long serviceInOrderId, HttpServletRequest request){
+
+        log.info("[{}] - [ServiceInOrderController] IP: {}, Request: GET, EndPoint: '/api/servico_ordem/{}'", timestamp, request.getRemoteAddr(),serviceInOrderId );
+
+        var intPut =orderService.getServiceById(serviceInOrderId);
+
+        var outPut = serviceInOrderMapper.toDTO(intPut);
+
+        return ResponseEntity.status(HttpStatus.OK).body(outPut);
+    }
 
     @PostMapping("/{serviceInOrderId}/foto_antes")
     public ResponseEntity<Void> addPhotoBeforeToOrder(@PathVariable Long serviceInOrderId, @RequestParam("file") MultipartFile image, HttpServletRequest request){
@@ -39,5 +55,14 @@ public class ServiceInOrderController implements ServiceInOrderControllerDocumen
         orderService.addPhotoAfter(serviceInOrderId, image);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{serviceInOrderId}")
+    public ResponseEntity<Void> deleteServiceInOrder(@PathVariable Long serviceInOrderId, HttpServletRequest request){
+        log.info("[{}] - [ServiceInOrderController] IP: {}, Request: DELETE, EndPoint: '/api/servico_ordem/{}", timestamp, request.getRemoteAddr(),serviceInOrderId );
+
+        orderService.deleteServiceInOrderById(serviceInOrderId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

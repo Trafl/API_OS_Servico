@@ -1,9 +1,10 @@
 package com.os.service.api.order.DTO.output;
 
 import com.os.service.api.order.DTO.endereco.EnderecoDTO;
-import com.os.service.api.order.DTO.workData.WorkDataDTOOutput;
 import com.os.service.api.order.DTO.generatorstatus.GeneratorStatusDTO;
+import com.os.service.api.order.DTO.workData.WorkDataDTOOutput;
 import com.os.service.api.serviceInOrder.DTO.output.ServiceInOrderDTOOutput;
+import com.os.service.domain.model.order.ClientType;
 import com.os.service.domain.model.order.WorkStatus;
 import com.os.service.domain.model.order.WorkType;
 import com.os.service.domain.model.order.generatortest.GeneratorTest;
@@ -30,6 +31,10 @@ public class OrderOnePdfDTOOutput {
 
     private Long client_id;
 
+    private ClientType client_type;
+
+    private Long client_equipment_id;
+
     private Long technician_id;
 
     private EnderecoDTO endereco;
@@ -45,7 +50,6 @@ public class OrderOnePdfDTOOutput {
     private GeneratorStatusDTO generatorStatus;
 
     private String generalObservations;
-
 
 }
 

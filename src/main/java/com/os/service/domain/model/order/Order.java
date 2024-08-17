@@ -32,6 +32,11 @@ public class Order {
 
     private Long client_id;
 
+    @Enumerated(EnumType.STRING)
+    private ClientType client_type;
+
+    private Long client_equipment_id;
+
     private Long technician_id;
 
     private String escopoDosServicos;

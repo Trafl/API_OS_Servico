@@ -28,6 +28,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -52,6 +53,7 @@ public class OrderController implements OrderControllerDocumentation {
     private String timestamp = LocalDateTime.now().toString();
 
     @GetMapping
+ //   @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<PagedModel<EntityModel<OrderAllDTOOutput>>> getAllOrders(@PageableDefault(size = 5) Pageable pageable,
                                                                            HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem'", timestamp, request.getRemoteAddr());
