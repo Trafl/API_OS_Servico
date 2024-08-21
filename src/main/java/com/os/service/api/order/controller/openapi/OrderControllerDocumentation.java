@@ -8,6 +8,7 @@ import com.os.service.api.order.DTO.input.OrderDTOInput;
 import com.os.service.api.order.DTO.output.OrderAllDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOnePdfDTOOutput;
+import com.os.service.api.order.DTO.output.OrderTotalCount;
 import com.os.service.api.serviceInOrder.DTO.input.ServiceInOrderDTOInput;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,7 +19,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -41,7 +47,7 @@ public interface OrderControllerDocumentation {
             responses = {
                     @ApiResponse(responseCode = "200")
             })
-     ResponseEntity<Integer> getOpenOrders(HttpServletRequest request);
+    ResponseEntity<OrderTotalCount> getCountOrders(HttpServletRequest request);
 
     @Operation(summary = "Pega uma ordem entre as datas informadas",
             responses = {
@@ -127,4 +133,13 @@ public interface OrderControllerDocumentation {
             })
      ResponseEntity<OrderOnePdfDTOOutput> getOneOrderForPDF(Long orderId, HttpServletRequest request);
 
+
+    @Operation(summary = "Salva a assinatura do cliente",
+            responses = {
+                    @ApiResponse(responseCode = "201"),
+
+                    @ApiResponse(responseCode = "404", description = "Ordem não foi encontrada no banco de dados",
+                            content = @Content(schema = @Schema(ref = "ProblemDetail")))
+            })
+    public ResponseEntity<Void> addClientSignature( Long orderId,MultipartFile image, HttpServletRequest request);
 }

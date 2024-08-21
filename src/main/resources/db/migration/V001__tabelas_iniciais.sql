@@ -8,7 +8,7 @@ CREATE TABLE group_services (
 CREATE TABLE orders (
     end TIME(6),
     generator_protect_frequencia TINYINT,
-    generator_protect_nivel_tanque_diesel TINYINT,
+    generator_protect_nivel_tanque_diesel VARCHAR(255),
     generator_protect_tensao TINYINT,
     motor_protect_alta_temperatura TINYINT,
     motor_protect_baixa_pressa_oleo TINYINT,
@@ -17,6 +17,7 @@ CREATE TABLE orders (
     start TIME(6),
     client_id BIGINT,
     client_equipment_id BIGINT,
+    client_signature_url VARCHAR(255),
     id BIGINT NOT NULL AUTO_INCREMENT,
     scheduled_date DATETIME(6),
     technician_id BIGINT,

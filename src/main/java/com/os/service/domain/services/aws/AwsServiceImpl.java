@@ -10,6 +10,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -23,6 +28,12 @@ public class AwsServiceImpl implements AwsService {
 
     private final AmazonS3 s3;
 
+    @Value("${IMAGE_WIDTH:300}")
+    private int imageWidth;
+
+    @Value("${IMAGE_HEIGHT:300}")
+    private int imageHeight;
+
     private String timestamp = LocalDateTime.now().toString();
     @Override
     public String savePhotoInS3(MultipartFile file)  {
@@ -30,13 +41,25 @@ public class AwsServiceImpl implements AwsService {
         try{
             log.info("[{}] - [AwsServiceImpl] Executing savePhotoInS3 ", timestamp);
 
+            BufferedImage originalImage = ImageIO.read(file.getInputStream());
+
+            BufferedImage resizedImage = new BufferedImage(imageWidth, imageWidth,BufferedImage.TYPE_INT_RGB);
+
+            Graphics2D g = resizedImage.createGraphics();
+            g.drawImage(originalImage.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH), 0, 0, null);
+            g.dispose();
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(resizedImage, "jpg", baos);
+            byte[] imageBytes = baos.toByteArray();
+
             fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(file.getSize());
-            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(imageBytes.length);
+            metadata.setContentType("image/jpeg");
 
-            s3.putObject(new PutObjectRequest(bucketName, fileName, file.getInputStream(), metadata));
+            s3.putObject(new PutObjectRequest(bucketName, fileName, new ByteArrayInputStream(imageBytes), metadata));
 
             log.info("[{}] - [AwsServiceImpl] photo name: {}, add successful to S3",timestamp,fileName);
         }catch (IOException e){

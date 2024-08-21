@@ -8,6 +8,7 @@ import com.os.service.api.order.DTO.input.OrderDTOInput;
 import com.os.service.api.order.DTO.output.OrderAllDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOnePdfDTOOutput;
+import com.os.service.api.order.DTO.output.OrderTotalCount;
 import com.os.service.api.order.controller.openapi.OrderControllerDocumentation;
 import com.os.service.api.order.mapper.OrderMapper;
 import com.os.service.api.serviceInOrder.DTO.input.ServiceInOrderDTOInput;
@@ -30,6 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -108,11 +110,11 @@ public class OrderController implements OrderControllerDocumentation {
         return ResponseEntity.ok(orderDTO);
     }
 
-    @GetMapping("/abertas")
-    public ResponseEntity<Integer> getOpenOrders(HttpServletRequest request){
+    @GetMapping("/contagem")
+    public ResponseEntity<OrderTotalCount> getCountOrders(HttpServletRequest request){
 
-        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/abertas'", timestamp, request.getRemoteAddr());
-        var countOrders = orderService.countOrderByStatus();
+        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/contagem'", timestamp, request.getRemoteAddr());
+        var countOrders = orderService.countOrder();
 
         return ResponseEntity.ok(countOrders);
     }
@@ -201,4 +203,12 @@ public class OrderController implements OrderControllerDocumentation {
         return ResponseEntity.ok(orderDTO);
     }
 
+    @PostMapping("/{orderId}/assinatura_cliente")
+    public ResponseEntity<Void> addClientSignature(@PathVariable Long orderId, @RequestParam("file") MultipartFile image, HttpServletRequest request){
+
+        log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/assinatura_cliente'", timestamp, orderId, request.getRemoteAddr());
+        orderService.addClientSignature(orderId, image);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

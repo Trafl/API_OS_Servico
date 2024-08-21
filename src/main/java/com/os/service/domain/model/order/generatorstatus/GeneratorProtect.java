@@ -16,5 +16,5 @@ public class GeneratorProtect {
 
     private Verification generatorProtect_frequencia;
 
-    private Verification generatorProtect_nivelTanqueDiesel;
+    private String generatorProtect_nivelTanqueDiesel;
 }

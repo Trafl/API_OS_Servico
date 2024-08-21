@@ -35,6 +35,8 @@ public class OrderOnePdfDTOOutput {
 
     private Long client_equipment_id;
 
+    private String client_signature_url;
+
     private Long technician_id;
 
     private EnderecoDTO endereco;

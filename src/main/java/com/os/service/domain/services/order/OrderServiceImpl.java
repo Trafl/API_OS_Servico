@@ -1,5 +1,6 @@
 package com.os.service.domain.services.order;
 
+import com.os.service.api.order.DTO.output.OrderTotalCount;
 import com.os.service.domain.exception.OrderFinishedOrCanceledException;
 import com.os.service.domain.exception.OrderNotFoundException;
 import com.os.service.domain.exception.OrderWrongStatusException;
@@ -10,6 +11,7 @@ import com.os.service.domain.model.order.generatorstatus.GeneratorStatus;
 import com.os.service.domain.model.order.generatortest.GeneratorTest;
 import com.os.service.domain.model.order.serviceInOrder.ServiceInOrder;
 import com.os.service.domain.repository.OrderRepository;
+import com.os.service.domain.services.aws.AwsService;
 import com.os.service.domain.services.service.ServiceServices;
 import com.os.service.domain.services.serviceInOrder.ServiceInOrderService;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +30,8 @@ import java.time.LocalDateTime;
 public class OrderServiceImpl implements OrderService {
 
     private final ServiceServices serviceServices;
+
+    private final AwsService awsService;
 
     private final OrderRepository orderRepository;
 
@@ -57,8 +62,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Integer countOrderByStatus() {
-        return orderRepository.countByStatus(WorkStatus.ABERTO);
+    public OrderTotalCount countOrder() {
+        log.info("[{}] - [OrderServiceImpl] Executing countOrder  ", timestamp);
+        var abertas = orderRepository.countByStatus(WorkStatus.ABERTO);
+        var total = orderRepository.countTotal();
+        return new OrderTotalCount(abertas, total);
     }
 
     @Override
@@ -176,18 +184,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateOrderById(Long orderId) {
-
-        // fazer com o mapper
-
-        return null;
-    }
-
-    @Override
     public void deleteOrderById(Long orderId) {
-        log.info("[{}] - [OrderServiceImpl] Executing deleteOrderById group id: {}", timestamp, orderId);
+        log.info("[{}] - [OrderServiceImpl] Executing deleteOrderById order id: {}", timestamp, orderId);
         getOneOrderById(orderId);
         orderRepository.deleteById(orderId);
         log.info("[{}] - [OrderServiceImpl] order delete successful. id: {}", timestamp, orderId);
+    }
+
+    @Override
+    @Transactional
+    public void addClientSignature(Long orderId, MultipartFile file) {
+        log.info("[{}] - [OrderServiceImpl] Executing addClientSignature order id: {}", timestamp, orderId);
+        var order = getOneOrderById(orderId);
+        var urlSignature = awsService.savePhotoInS3(file);
+        order.setClient_signature_url(urlSignature);
+        log.info("[{}] - [OrderServiceImpl] Signature add to order id: {}", timestamp, orderId);
     }
 }

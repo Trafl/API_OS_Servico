@@ -18,7 +18,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findByDate(Pageable pageable, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status")
-    Integer countByStatus(@Param("status") WorkStatus status);
+    Long countByStatus(@Param("status") WorkStatus status);
+
+    @Query("SELECT COUNT(o) FROM Order o")
+    Long countTotal();
 
     @Override
     @Query("SELECT o FROM Order o ORDER BY o.id DESC")

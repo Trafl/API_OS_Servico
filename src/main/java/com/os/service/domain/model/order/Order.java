@@ -60,6 +60,8 @@ public class Order {
 
     private String generalObservations;
 
+    private String client_signature_url;
+
     public void starOrder() {
         this.workData.startOrder();
         this.status = WorkStatus.ANDAMENTO;
