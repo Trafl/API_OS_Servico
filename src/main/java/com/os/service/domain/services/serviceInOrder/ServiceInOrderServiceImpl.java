@@ -49,8 +49,17 @@ public class ServiceInOrderServiceImpl implements ServiceInOrderService {
     @Override
     public void deleteServiceInOrderById(Long id) {
         log.info("[{}] - [ServiceInOrderServiceImpl] Executing deleteServiceById ServiceInOrder Id: {} ", timestamp, id);
-        getServiceById(id);
-        serviceInOrderRepository.deleteById(id);
+       var serviceInOrder = getServiceById(id);
+
+       if(serviceInOrder.getUrlPhotoBefore() != null){
+           awsService.deletePhotoS3(serviceInOrder.getUrlPhotoBefore());
+       }
+
+       if(serviceInOrder.getUrlPhotoAfter() != null){
+            awsService.deletePhotoS3(serviceInOrder.getUrlPhotoAfter());
+       }
+
+       serviceInOrderRepository.deleteById(id);
 
         log.info("[{}] - [ServiceInOrderServiceImpl] serviceInOrder delete successful. id: {}", timestamp, id);
 

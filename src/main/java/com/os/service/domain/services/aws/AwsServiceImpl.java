@@ -1,6 +1,7 @@
 package com.os.service.domain.services.aws;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.os.service.domain.exception.ErrorUploadPhotoForS3Exception;
@@ -53,7 +54,7 @@ public class AwsServiceImpl implements AwsService {
             ImageIO.write(resizedImage, "jpg", baos);
             byte[] imageBytes = baos.toByteArray();
 
-            fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            fileName = System.currentTimeMillis() + "_";
 
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(imageBytes.length);
@@ -67,5 +68,14 @@ public class AwsServiceImpl implements AwsService {
         }
 
         return s3.getUrl(bucketName, fileName).toString();
+    }
+
+    public void deletePhotoS3(String path) {
+        log.info("[{}] - [AwsServiceImpl] executing deletePhotoS3 ", timestamp);
+
+        String filename = path.substring(path.lastIndexOf("/") + 1);
+
+        s3.deleteObject(new DeleteObjectRequest(bucketName, filename));
+        log.info("[{}] - [AwsServiceImpl] photo path: {}, delete successful ", timestamp, filename);
     }
 }
