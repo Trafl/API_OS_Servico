@@ -126,7 +126,7 @@ do
         ;;
         *)
         echoerr "Unknown argument: $1"
-        usage
+        usage'
         ;;
     esac
 done

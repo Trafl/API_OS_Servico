@@ -10,20 +10,17 @@ spring:
     password: ${MYSQL_PASSWORD}
 
 server:
-  port: ${API_OS_PORT}
+  port: ${SERVER_PORT}
 
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: http://localhost:8080/realms/Energ
-#          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${KEYCLOAK_HOST}:8080/realms/Energ
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
-
-
-
-#jwt:
-#  auth:
-#    converter:
-#      resource-id: energ_client_app
-#      principle-attribute: preferred_username
+jwt:
+  auth:
+    converter:
+      resource-id: energ_client_app
+      principle-attribute: preferred_username

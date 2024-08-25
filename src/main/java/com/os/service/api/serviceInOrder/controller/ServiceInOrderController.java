@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +29,7 @@ public class ServiceInOrderController implements ServiceInOrderControllerDocumen
     private String timestamp = LocalDateTime.now().toString();
 
     @GetMapping("/{serviceInOrderId}")
+    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<ServiceInOrderDTOOutput> getServiceInOrderById(@PathVariable Long serviceInOrderId, HttpServletRequest request){
 
         log.info("[{}] - [ServiceInOrderController] IP: {}, Request: GET, EndPoint: '/api/servico_ordem/{}'", timestamp, request.getRemoteAddr(),serviceInOrderId );
@@ -40,6 +42,7 @@ public class ServiceInOrderController implements ServiceInOrderControllerDocumen
     }
 
     @PostMapping("/{serviceInOrderId}/foto_antes")
+    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> addPhotoBeforeToOrder(@PathVariable Long serviceInOrderId, @RequestParam("file") MultipartFile image, HttpServletRequest request){
         log.info("[{}] - [ServiceInOrderController] IP: {}, Request: POST, EndPoint: '/api/servico_ordem/{}/foto_antes'", timestamp, request.getRemoteAddr(),serviceInOrderId );
 
@@ -49,6 +52,7 @@ public class ServiceInOrderController implements ServiceInOrderControllerDocumen
     }
 
     @PostMapping("/{serviceInOrderId}/foto_depois")
+    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> addPhotoAfterToOrder(@PathVariable Long serviceInOrderId, @RequestParam("file") MultipartFile image, HttpServletRequest request){
         log.info("[{}] - [ServiceInOrderController] IP: {}, Request: POST, EndPoint: '/api/servico_ordem/{}/foto_depois'", timestamp, request.getRemoteAddr(),serviceInOrderId );
 
@@ -58,6 +62,7 @@ public class ServiceInOrderController implements ServiceInOrderControllerDocumen
     }
 
     @DeleteMapping("/{serviceInOrderId}")
+    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> deleteServiceInOrder(@PathVariable Long serviceInOrderId, HttpServletRequest request){
         log.info("[{}] - [ServiceInOrderController] IP: {}, Request: DELETE, EndPoint: '/api/servico_ordem/{}", timestamp, request.getRemoteAddr(),serviceInOrderId );
 
