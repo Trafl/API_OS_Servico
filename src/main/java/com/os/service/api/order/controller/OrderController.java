@@ -29,7 +29,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,7 +54,7 @@ public class OrderController implements OrderControllerDocumentation {
     private String timestamp = LocalDateTime.now().toString();
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<PagedModel<EntityModel<OrderAllDTOOutput>>> getAllOrders(@PageableDefault(size = 5) Pageable pageable,
                                                                            HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem'", timestamp, request.getRemoteAddr());
@@ -76,7 +75,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @GetMapping("/filtro")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<PagedModel<EntityModel<OrderAllDTOOutput>>> getOrderByDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDay,
                                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endDay,
                                                                   @PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
@@ -102,7 +101,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @GetMapping("/{orderId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<OrderOneDTOOutput> getOneOrder(@PathVariable Long orderId, HttpServletRequest request){
 
         log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/{}'", timestamp,orderId, request.getRemoteAddr());
@@ -113,7 +112,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @GetMapping("/contagem")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<OrderTotalCount> getCountOrders(HttpServletRequest request){
 
         log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/contagem'", timestamp, request.getRemoteAddr());
@@ -123,7 +122,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<OrderOneDTOOutput> addOrder(@RequestBody @Valid OrderDTOInput dtoInput, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem'", timestamp, request.getRemoteAddr());
 
@@ -137,7 +136,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PutMapping("/{orderId}/iniciar")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> startOrder(@PathVariable Long orderId, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/iniciar'", timestamp, request.getRemoteAddr(), orderId);
         orderService.starOrder(orderId);
@@ -146,7 +145,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PutMapping("/{orderId}/finalizar")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> finishOrder(@PathVariable Long orderId, @RequestBody GeneralObservationsDTOInput dtoInput, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/finalizar'", timestamp, request.getRemoteAddr(), orderId);
         orderService.closeOrder(orderId, dtoInput.getGeneralObservations());
@@ -155,7 +154,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PutMapping("/{orderId}/cancelar")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> cancelOrder(@PathVariable Long orderId, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/cancelar'", timestamp, request.getRemoteAddr(), orderId);
         orderService.cancelOrder(orderId);
@@ -164,7 +163,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PostMapping("/{orderId}/servico")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<OrderOneDTOOutput> addServiceToOrder(@PathVariable Long orderId,
                                                                @Valid @RequestBody ServiceInOrderDTOInput dtoInput, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}'", timestamp, request.getRemoteAddr(), orderId);
@@ -178,7 +177,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PostMapping("/{orderId}/gerador_teste")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> addGeneratorTestToOrder(@PathVariable Long orderId, @RequestBody GeneratorTestDTO dtoInput, HttpServletRequest request){
 
         log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/gerador_teste'", timestamp, request.getRemoteAddr(), orderId);
@@ -191,7 +190,7 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PostMapping("/{orderId}/gerador_status")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> addGeneratorStatusToOrder(@PathVariable Long orderId, @RequestBody GeneratorStatusDTO dtoInput, HttpServletRequest request){
 
         log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/gerador_status'", timestamp, request.getRemoteAddr(), orderId);
@@ -204,10 +203,10 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @GetMapping("/{orderId}/pdf")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<OrderOnePdfDTOOutput> getOneOrderForPDF(@PathVariable Long orderId, HttpServletRequest request){
 
-        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/{}/pdf'", timestamp,orderId, request.getRemoteAddr());
+        log.info("[{}] - [OrderController] IP: {}, Request: GET, EndPoint: 'api/ordem/{}/pdf'", timestamp,request.getRemoteAddr(), orderId);
         var savedOrder = orderService.getOneOrderById(orderId);
         var orderDTO = mapper.toDTOPdf(savedOrder);
 
@@ -215,10 +214,10 @@ public class OrderController implements OrderControllerDocumentation {
     }
 
     @PostMapping("/{orderId}/assinatura_cliente")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> addClientSignature(@PathVariable Long orderId, @RequestParam("file") MultipartFile image, HttpServletRequest request){
 
-        log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/assinatura_cliente'", timestamp, orderId, request.getRemoteAddr());
+        log.info("[{}] - [OrderController] IP: {}, Request: POST, EndPoint: 'api/ordem/{}/assinatura_cliente'", timestamp,request.getRemoteAddr(), orderId);
         orderService.addClientSignature(orderId, image);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

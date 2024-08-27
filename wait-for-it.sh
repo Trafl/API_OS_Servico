@@ -126,7 +126,7 @@ do
         ;;
         *)
         echoerr "Unknown argument: $1"
-        usage'
+        usage
         ;;
     esac
 done
@@ -149,7 +149,7 @@ WAITFORIT_BUSYTIMEFLAG=""
 if [[ $WAITFORIT_TIMEOUT_PATH =~ "busybox" ]]; then
     WAITFORIT_ISBUSY=1
     # Check if busybox timeout uses -t flag
-    # (recent Alpine versions don't support -t anymore)
+    # Recent Alpine versions don't support -t anymore
     if timeout &>/dev/stdout | grep -q -e '-t '; then
         WAITFORIT_BUSYTIMEFLAG="-t"
     fi
@@ -171,7 +171,7 @@ else
     fi
 fi
 
-if [[ $WAITFORIT_CLI != "" ]]; then
+if [[ ${#WAITFORIT_CLI[@]} -gt 0 ]]; then
     if [[ $WAITFORIT_RESULT -ne 0 && $WAITFORIT_STRICT -eq 1 ]]; then
         echoerr "$WAITFORIT_cmdname: strict mode, refusing to execute subprocess"
         exit $WAITFORIT_RESULT

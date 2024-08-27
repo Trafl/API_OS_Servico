@@ -15,7 +15,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - '${API_OS_PORT}:${API_OS_PORT}'
+      - '${SERVER_PORT}:${SERVER_PORT}'
 
   api_ts:
     image: vidallluan/api-rest-energ

@@ -17,7 +17,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -37,7 +36,7 @@ public class ServiceController implements ServiceControllerDocumentation {
     final private PagedResourcesAssembler<ServiceDTOOutput> pagedResourcesAssembler;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getAllServices(@PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
 
         log.info("[{}] - [ServiceController] IP: {}, Request: GET, EndPoint: '/api/servicos'", timestamp, request.getRemoteAddr());
@@ -58,7 +57,7 @@ public class ServiceController implements ServiceControllerDocumentation {
     }
 
     @GetMapping("/{serviceId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<ServiceDTOOutput> getOneServiceById(@PathVariable Long serviceId, HttpServletRequest request){
 
         log.info("[{}] - [ServiceController] IP: {}, Request: GET, EndPoint: '/api/servicos/{}'", timestamp, request.getRemoteAddr(), serviceId);
@@ -71,7 +70,7 @@ public class ServiceController implements ServiceControllerDocumentation {
     }
 
     @PutMapping("/{serviceId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<ServiceDTOOutput> updateOneServiceById(@PathVariable Long serviceId,
                                                                  @RequestBody @Valid ServiceDTOInput newService, HttpServletRequest request){
 
@@ -87,7 +86,7 @@ public class ServiceController implements ServiceControllerDocumentation {
     }
 
     @DeleteMapping("/{serviceId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<Void> deleteServiceById(@PathVariable Long serviceId, HttpServletRequest request){
 
         log.info("[{}] - [ServiceController] IP: {}, Request: DELETE, EndPoint: '/api/servicos/{}'", timestamp, request.getRemoteAddr(), serviceId);

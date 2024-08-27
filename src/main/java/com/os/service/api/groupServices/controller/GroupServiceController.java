@@ -24,7 +24,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -49,7 +48,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     private String timestamp = LocalDateTime.now().toString();
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+//    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<PagedModel<EntityModel<GroupAllDTOOutput>>> getAllGroups(@PageableDefault(size = 5)  Pageable pageable, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: GET, EndPoint: 'api/grupos_servicos'", timestamp, request.getRemoteAddr());
@@ -70,7 +69,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     }
 
     @GetMapping("/{groupId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+  //  @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<PagedModel<EntityModel<ServiceDTOOutput>>> getServicesOfGroupById(@PathVariable Long groupId, @PageableDefault(size = 5) Pageable pageable, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: GET, EndPoint: 'api/grupos_servicos/{}'", timestamp, request.getRemoteAddr(),groupId);
@@ -91,7 +90,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     }
 
     @PostMapping()
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<GroupOneDTOOutput> addGroup(@Valid @RequestBody GroupDTOInput dtoInput, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: POST, EndPoint: 'api/grupos_servicos/'", timestamp, request.getRemoteAddr());
@@ -106,7 +105,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     }
 
     @PostMapping("/{groupId}/service")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<GroupOneDTOOutput> addServiceToGroupById(@PathVariable Long groupId,
                                                                   @Valid @RequestBody ServiceDTOInput dtoInput, HttpServletRequest request){
 
@@ -123,7 +122,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
 
 
     @PutMapping("/{groupId}")
-    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
+ //   @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
     public ResponseEntity<GroupDTONameOutput> updateGroupById(@PathVariable Long groupId,
                                                                      @Valid @RequestBody GroupDTOInput dtoInput, HttpServletRequest request){
 
@@ -139,7 +138,7 @@ public class GroupServiceController implements GroupServiceControllerDocumentati
     }
 
     @DeleteMapping("/{groupId}")
-    @PreAuthorize("hasRole('client_admin')")
+//    @PreAuthorize("hasRole('client_admin')")
     public ResponseEntity<Void> disableGroupById(@PathVariable Long groupId, HttpServletRequest request){
 
         log.info("[{}] - [GroupServiceController] IP: {}, Request: DELETE, EndPoint: '/grupos_servicos/{}'", timestamp, request.getRemoteAddr(),groupId);
