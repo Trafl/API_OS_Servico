@@ -1,4 +1,4 @@
-package com.os.service.api.order.DTO.output;
+package com.os.service.api.order.DTO.input;
 
 import com.os.service.api.order.DTO.endereco.EnderecoDTOOutput;
 import com.os.service.api.order.DTO.generatorstatus.GeneratorStatusDTO;
@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderOnePdfDTOOutput {
+public class OrderOnePdfDTOInput {
 
     private Long id;
 
@@ -29,17 +29,15 @@ public class OrderOnePdfDTOOutput {
 
     private LocalDateTime scheduledDate;
 
-    private Long client_id;
+    private ClientDTOInput client;
 
-    private ClientType client_type;
-
-    private Long client_equipment_id;
+    private ClientEquipmentDTOInput client_equipment;
 
     private String client_signature_url;
 
-    private Long technician_id;
+    private TechnicianDTOInput technician;
 
-    private EnderecoDTOOutput endereco;
+    private EnderecoDTOInput endereco;
 
     private String escopoDosServicos;
 
@@ -52,8 +50,6 @@ public class OrderOnePdfDTOOutput {
     private GeneratorStatusDTO generatorStatus;
 
     private String generalObservations;
-
-    private String pathPDF;
 
 }
 

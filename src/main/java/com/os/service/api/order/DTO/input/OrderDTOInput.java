@@ -1,6 +1,6 @@
 package com.os.service.api.order.DTO.input;
 
-import com.os.service.api.order.DTO.endereco.EnderecoDTO;
+import com.os.service.api.order.DTO.endereco.EnderecoDTOInput;
 import com.os.service.domain.model.order.ClientType;
 import com.os.service.domain.model.order.WorkType;
 import jakarta.validation.Valid;
@@ -36,7 +36,7 @@ public class OrderDTOInput {
     private Long technician_id;
 
     @Valid
-    private EnderecoDTO endereco;
+    private EnderecoDTOInput endereco;
 
     @NotBlank
     private String escopoDosServicos;

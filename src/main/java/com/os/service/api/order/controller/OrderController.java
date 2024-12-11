@@ -3,8 +3,8 @@ package com.os.service.api.order.controller;
 
 import com.os.service.api.order.DTO.generatorstatus.GeneratorStatusDTO;
 import com.os.service.api.order.DTO.generatortest.GeneratorTestDTO;
-import com.os.service.api.order.DTO.input.GeneralObservationsDTOInput;
 import com.os.service.api.order.DTO.input.OrderDTOInput;
+import com.os.service.api.order.DTO.input.OrderOnePdfDTOInput;
 import com.os.service.api.order.DTO.output.OrderAllDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOnePdfDTOOutput;
@@ -146,9 +146,9 @@ public class OrderController implements OrderControllerDocumentation {
 
     @PutMapping("/{orderId}/finalizar")
 //    @PreAuthorize("hasAnyRole('client_user', 'client_admin')")
-    public ResponseEntity<Void> finishOrder(@PathVariable Long orderId, @RequestBody GeneralObservationsDTOInput dtoInput, HttpServletRequest request){
+    public ResponseEntity<Void> finishOrder(@PathVariable Long orderId, @RequestBody OrderOnePdfDTOInput orderDTOInput, HttpServletRequest request){
         log.info("[{}] - [OrderController] IP: {}, Request: PUT, EndPoint: 'api/ordem/{}/finalizar'", timestamp, request.getRemoteAddr(), orderId);
-        orderService.closeOrder(orderId, dtoInput.getGeneralObservations());
+        orderService.closeOrder(orderDTOInput);
 
         return ResponseEntity.ok().build();
     }

@@ -1,5 +1,6 @@
 package com.os.service.domain.services.order;
 
+import com.os.service.api.order.DTO.input.OrderOnePdfDTOInput;
 import com.os.service.api.order.DTO.output.OrderTotalCount;
 import com.os.service.domain.model.order.Order;
 import com.os.service.domain.model.order.generatorstatus.GeneratorStatus;
@@ -29,7 +30,7 @@ public interface OrderService {
 
     void starOrder(Long orderId);
 
-    void closeOrder(Long orderId, String generalObservations);
+    void closeOrder(OrderOnePdfDTOInput orderDTOInput);
 
     void cancelOrder(Long orderId);
 

@@ -3,8 +3,8 @@ package com.os.service.api.order.controller.openapi;
 
 import com.os.service.api.order.DTO.generatorstatus.GeneratorStatusDTO;
 import com.os.service.api.order.DTO.generatortest.GeneratorTestDTO;
-import com.os.service.api.order.DTO.input.GeneralObservationsDTOInput;
 import com.os.service.api.order.DTO.input.OrderDTOInput;
+import com.os.service.api.order.DTO.input.OrderOnePdfDTOInput;
 import com.os.service.api.order.DTO.output.OrderAllDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOneDTOOutput;
 import com.os.service.api.order.DTO.output.OrderOnePdfDTOOutput;
@@ -19,11 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -80,7 +76,7 @@ public interface OrderControllerDocumentation {
                     @ApiResponse(responseCode = "404", description = "Ordem não foi encontrada no banco de dados",
                             content = @Content(schema = @Schema(ref = "ProblemDetail"))),
             })
-     ResponseEntity<Void> finishOrder(Long orderId, GeneralObservationsDTOInput dtoInput, HttpServletRequest request);
+     ResponseEntity<Void> finishOrder(Long orderId, OrderOnePdfDTOInput orderDTOInput, HttpServletRequest request);
 
     @Operation(summary = "Cancela uma Ordem", description = "Cancela uma Orderm de serviço que esta no Db",
             responses = {

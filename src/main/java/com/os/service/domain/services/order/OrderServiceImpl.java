@@ -1,5 +1,6 @@
 package com.os.service.domain.services.order;
 
+import com.os.service.api.order.DTO.input.OrderOnePdfDTOInput;
 import com.os.service.api.order.DTO.output.OrderTotalCount;
 import com.os.service.domain.exception.OrderFinishedOrCanceledException;
 import com.os.service.domain.exception.OrderNotFoundException;
@@ -132,21 +133,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void closeOrder(Long orderId, String generalObservations) {
-        log.info("[{}] - [OrderServiceImpl] Executing closeOrder with Id Order:{} ", timestamp, orderId);
-        var orderInDb = getOneOrderById(orderId);
+    public void closeOrder(OrderOnePdfDTOInput orderDTOInput) {
+        log.info("[{}] - [OrderServiceImpl] Executing closeOrder with Id Order:{} ", timestamp, orderDTOInput.getId());
 
-        if(generalObservations == null){
-            generalObservations = "";
-        }
+        var orderInDb = getOneOrderById(orderDTOInput.getId());
 
         if(orderInDb.getStatus().equals(WorkStatus.ANDAMENTO)){
-            orderInDb.setGeneralObservations(generalObservations);
+            orderInDb.setGeneralObservations(orderDTOInput.getGeneralObservations());
+
+            var pathPDF = awsService.saveJsonPDFS3(orderDTOInput);
+
+            orderInDb.setPathPDF(pathPDF);
             orderInDb.closeOrder();
-            log.info("[{}] - [OrderServiceImpl] Id Order:{} Closed ", timestamp, orderId);
+            log.info("[{}] - [OrderServiceImpl] Id Order:{} Closed ", timestamp, orderDTOInput.getId());
+
         }else{
             throw new OrderWrongStatusException(
-                    String.format("Order: Id %d not start", orderId));
+                    String.format("Order: Id %d not start", orderDTOInput.getId()));
         }
     }
 

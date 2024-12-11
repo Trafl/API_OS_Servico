@@ -46,7 +46,4 @@ public class OrderMapper {
         return mapper.map(generatorStatusDTO, GeneratorTest.class);
     }
 
-    public List<OrderAllDTOOutput> toCollectionDto(List<Order> list){
-        return list.stream().map(order -> mapper.map(order, OrderAllDTOOutput.class)).toList();
-    }
 }

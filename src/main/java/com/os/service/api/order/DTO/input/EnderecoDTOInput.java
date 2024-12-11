@@ -4,9 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class GeneralObservationsDTOInput {
-    private String generalObservations;
+public class EnderecoDTOInput {
+
+        private String rua;
+        private String bairro;
+        private String cidade;
+        private String numero;
 }

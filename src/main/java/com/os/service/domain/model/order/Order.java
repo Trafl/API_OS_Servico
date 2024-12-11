@@ -60,6 +60,8 @@ public class Order {
 
     private String generalObservations;
 
+    private String pathPDF;
+
     private String client_signature_url;
 
     public void starOrder() {

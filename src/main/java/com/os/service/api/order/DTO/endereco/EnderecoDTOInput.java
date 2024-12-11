@@ -2,7 +2,6 @@ package com.os.service.api.order.DTO.endereco;
 
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class EnderecoDTO {
+public class EnderecoDTOInput {
 
     @NotBlank
     private String rua;
 
-    @NotNull
     private Integer numero;
 
     @NotBlank
