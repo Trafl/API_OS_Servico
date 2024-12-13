@@ -20,5 +20,4 @@ public class ClientEquipmentDTOInput {
     @JsonProperty("KWH_atual")
     private Float KWH_atual;
 
-
 }

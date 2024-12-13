@@ -140,11 +140,13 @@ public class OrderServiceImpl implements OrderService {
 
         if(orderInDb.getStatus().equals(WorkStatus.ANDAMENTO)){
             orderInDb.setGeneralObservations(orderDTOInput.getGeneralObservations());
+            orderInDb.closeOrder();
+
+            orderDTOInput.getWorkData().setEnd(orderInDb.getWorkData().getEnd());
 
             var pathPDF = awsService.saveJsonPDFS3(orderDTOInput);
 
             orderInDb.setPathPDF(pathPDF);
-            orderInDb.closeOrder();
             log.info("[{}] - [OrderServiceImpl] Id Order:{} Closed ", timestamp, orderDTOInput.getId());
 
         }else{

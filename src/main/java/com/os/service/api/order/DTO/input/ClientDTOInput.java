@@ -13,7 +13,9 @@ public class ClientDTOInput {
 
         private String nome;
 
-        private String cpfOrCnpj;
+        private String cpf;
+
+        private String cnpj;
 
         private String email;
 

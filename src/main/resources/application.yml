@@ -17,6 +17,10 @@ spring:
 server:
   port: ${SERVER_PORT}
 
+#logging:
+#  level:
+#    root: DEBUG
+
 #  security:
 #    oauth2:
 #      resourceserver:
