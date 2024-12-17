@@ -143,6 +143,7 @@ public class OrderServiceImpl implements OrderService {
             orderInDb.closeOrder();
 
             orderDTOInput.getWorkData().setEnd(orderInDb.getWorkData().getEnd());
+            orderDTOInput.setStatus(WorkStatus.FINALIZADO);
 
             var pathPDF = awsService.saveJsonPDFS3(orderDTOInput);
 

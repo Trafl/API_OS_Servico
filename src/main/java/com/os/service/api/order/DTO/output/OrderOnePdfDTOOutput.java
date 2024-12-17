@@ -1,5 +1,6 @@
 package com.os.service.api.order.DTO.output;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.os.service.api.order.DTO.endereco.EnderecoDTOOutput;
 import com.os.service.api.order.DTO.generatorstatus.GeneratorStatusDTO;
 import com.os.service.api.order.DTO.workData.WorkDataDTOOutput;
@@ -27,6 +28,7 @@ public class OrderOnePdfDTOOutput {
 
     private WorkType type;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime scheduledDate;
 
     private Long client_id;

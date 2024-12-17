@@ -116,10 +116,10 @@ public class AwsServiceImpl implements AwsService {
 
             ByteArrayInputStream inputStream = new ByteArrayInputStream(pdfJson.getBytes(StandardCharsets.UTF_8));
 
-            s3.putObject(bucketName, fileName, inputStream, metadata);
+            s3.putObject("energ-pdf", fileName, inputStream, metadata);
             log.info("[{}] - [AwsServiceImpl] Json send to S3 ", timestamp);
 
-            return s3.getUrl(bucketName, fileName).toString();
+            return s3.getUrl("energ-pdf", fileName).toString();
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error processing object to JSON", e);

@@ -1,5 +1,6 @@
 package com.os.service.api.order.DTO.output;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.os.service.domain.model.order.WorkStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,6 +24,7 @@ public class OrderAllDTOOutput {
 
     private Long technician_id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime scheduledDate;
 
 }
