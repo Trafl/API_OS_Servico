@@ -28,7 +28,7 @@ public class OrderOnePdfDTOOutput {
 
     private WorkType type;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime scheduledDate;
 
     private Long client_id;
